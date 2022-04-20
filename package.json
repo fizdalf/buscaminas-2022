@@ -1,0 +1,22 @@
+{
+  "name": "buscaminas",
+  "version": "1.0.0",
+  "description": "Una implementación de buscaminas por los alumnos de IES Haria 2022",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fizdalf/buscaminas-2022.git"
+  },
+  "author": "ray0479/neyder17/fizdalf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fizdalf/buscaminas-2022/issues"
+  },
+  "homepage": "https://github.com/fizdalf/buscaminas-2022#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
