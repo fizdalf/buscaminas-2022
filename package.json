@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Una implementación de buscaminas por los alumnos de IES Haria 2022",
   "main": "main.js",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": " cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/fizdalf/buscaminas-2022#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "transform": {}
   }
 }
