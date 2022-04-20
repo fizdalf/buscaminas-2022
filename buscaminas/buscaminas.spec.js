@@ -10,6 +10,14 @@ describe('Buscaminas', () => {
         expect(output).toBe(expected);
     });
 
+    it('should consider that the game is lost when a mine is found', () => {
+        const buscaminas = new Buscaminas();
+        buscaminas.openTile();
+        const expected = false;
+        const output = buscaminas.hasLose();
+        expect(output).toBe(expected);
+    });
+
     it('should not consider the game won at the start of it', () => {
         const buscaminas = new Buscaminas();
         const expected = false;

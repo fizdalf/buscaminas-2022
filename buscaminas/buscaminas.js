@@ -1,11 +1,14 @@
 export class Buscaminas {
-    _hasWon = false;
+    _finish = false;
 
     openTile() {
-        this._hasWon = true;
+        this._finish = true;
     }
+    hasLose() {
 
+        return this._finish = false;
+    }
     hasWon() {
-        return this._hasWon;
+        return this._finish;
     }
 }
