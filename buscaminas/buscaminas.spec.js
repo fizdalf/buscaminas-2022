@@ -11,10 +11,13 @@ describe('Buscaminas', () => {
     it('should consider the tile is a mine', () => {
         const buscaminas = new Buscaminas();
         const expected = true;
-        expect(buscaminas.isMine()).toBe(expected);
+        expect(buscaminas.isMine(true)).toBe(expected);
     });
-
-
+    it('should consider the tile is not a mine', () => {
+        const buscaminas = new Buscaminas();
+        const expected = false;
+        expect(buscaminas.isMine(false)).toBe(expected);
+    });
 
     it('should consider that the game is lost when a mine is found', () => {
         const buscaminas = new Buscaminas();

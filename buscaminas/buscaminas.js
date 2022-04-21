@@ -4,11 +4,11 @@ export class Buscaminas {
     openTile() {
         this._finish = true;
     }
-    isMine() {
-        return true;
+    isMine(mine) {
+        return mine;
     }
     markTile() {
-        if (this.isMine()){
+        if (this.isMine(true)){
             this._finish = true;
         }
     }
