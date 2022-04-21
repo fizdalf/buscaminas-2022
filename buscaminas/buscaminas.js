@@ -36,4 +36,7 @@ export class Buscaminas {
             return 3;
         }
     }
+    isAroundEmpty(empty){
+        return empty;
+    }
 }

@@ -70,6 +70,19 @@ describe('Buscaminas', () => {
         const output = buscaminas.status('marked');
         expect(output).toBe(expected);
     });
+    it('consider the around tiles are empty', () => {
+        const buscaminas = new Buscaminas();
+        const expected = true;
+        const output = buscaminas.isAroundEmpty(true);
+        expect(output).toBe(expected);
+    });
+
+    it('consider the around tiles are not empty', () => {
+        const buscaminas = new Buscaminas();
+        const expected = false;
+        const output = buscaminas.isAroundEmpty(false);
+        expect(output).toBe(expected);
+    });
 });
 
 
