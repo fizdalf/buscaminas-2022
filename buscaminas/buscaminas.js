@@ -1,42 +1,43 @@
+import {Tile} from "./tile.js";
+
+export const gameStates = {
+    PLAYING: 0,
+    WON: 1,
+    LOST: 2
+}
+
 export class Buscaminas {
-    _finish = false;
+    _gameState = gameStates.PLAYING;
+    _tile;
+
+    constructor(hasMine = false) {
+        this._tile = new Tile(hasMine);
+    }
 
     openTile() {
-        this._finish = true;
-    }
-    isMine(mine) {
-        return mine;
-    }
-    markTile() {
-        if (this.isMine(true)){
-            this._finish = true;
-        }
-        else{
-            return false
+        const wasMine = this._tile.openTile();
+        if (wasMine) {
+            this._gameState = gameStates.LOST;
+        } else {
+            this._gameState = gameStates.WON;
         }
     }
 
-    hasLose() {
-        return this._finish = false;
-    }
-    hasWon() {
-        return this._finish;
-    }
-    status(_status) {
-        if (_status == "close"){
-            return 0;
-        }
-        else if (_status == "open"){
-            return 1;
-        }
-        else if (_status == "mine"){
-            return 2;
-        }
-        else if (_status == "marked"){
-            return 3;
+    markTile() {
+        const wasMine = this.setMarked();
+        if (wasMine) {
+            this._gameState = gameStates.WON;
         }
     }
-    isAroundEmpty(empty){
-        return empty;
+
+    tileState() {
+        return this._tile.state();
+    }
+
+    gameState() {
+        return this._gameState;
+    }
+    setMarked() {
+        return this._tile.setMarked();
     }
 }
