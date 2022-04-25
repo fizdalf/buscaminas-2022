@@ -24,14 +24,27 @@ export class Buscaminas {
         } else {
             if(!this._secondTile.stateOfOnlyTile()){
                 this._secondTile.openTile();
+                this._gameState = gameStates.WON;
             }
             else{}
-            this._gameState = gameStates.WON;
         }
     }
 
-    markTile() {
-        const wasMine = this.setMarked();
+    openSecondTile() {
+        const wasMine = this._secondTile.openTile();
+        if (wasMine) {
+            this._gameState = gameStates.LOST;
+        } else {
+            if(!this._tile.stateOfOnlyTile()){
+                this._tile.openTile();
+                this._gameState = gameStates.WON;
+            }
+            else{}
+        }
+    }
+
+    markTile(tile) {
+        const wasMine = this.setMarked(tile);
         if (this._gameState === gameStates.LOST){
             this._gameState = gameStates.LOST;
             return;
@@ -42,7 +55,6 @@ export class Buscaminas {
     }
 
     tileState() {
-        console.log([this._tile.state(), this._secondTile.state()])
         return [this._tile.state(), this._secondTile.state()];
     }
 
@@ -50,7 +62,12 @@ export class Buscaminas {
         return this._gameState;
     }
 
-    setMarked() {
-        return this._tile.setMarked();
+    setMarked(tile) {
+        if(tile === 1){
+            return this._tile.setMarked();
+        }
+        else if (tile === 2){
+            return this._secondTile.setMarked();
+        }
     }
 }
