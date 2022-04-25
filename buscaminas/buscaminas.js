@@ -10,43 +10,47 @@ export class Buscaminas {
     _gameState = gameStates.PLAYING;
     _tile;
     _secondTile;
-    constructor(hasMine){
-        this._tile = new Tile(hasMine);
+    constructor(hasMine = [false, false]) {
+        this._tile = new Tile(hasMine[0]);
+        this._secondTile = new Tile(hasMine[1]);
     }
-    openTile(number) {
-        const wasMine = this._tile.openTile(number);
-        this._secondTile = new Tile(this._tile.aroundMine(number))
+
+
+
+    openTile() {
+        const wasMine = this._tile.openTile();
         if (wasMine) {
             this._gameState = gameStates.LOST;
         } else {
-            if (this._tile.state() === tileStates.MARKED){}
-            else if(this._tile.state() === tileStates.ONE){}
-            else{
+            if(!this._secondTile.stateOfOnlyTile()){
                 this._secondTile.openTile();
-                this._gameState = gameStates.WON;
             }
+            else{}
+            this._gameState = gameStates.WON;
         }
     }
 
     markTile() {
         const wasMine = this.setMarked();
-            if (wasMine) {
-                this._gameState = gameStates.WON;
-            }
+        if (this._gameState === gameStates.LOST){
+            this._gameState = gameStates.LOST;
+            return;
         }
+        if (wasMine) {
+            this._gameState = gameStates.WON;
+        }
+    }
 
     tileState() {
-        if(this._secondTile === undefined){
-            this._secondTile = new Tile()
-        }
+        console.log([this._tile.state(), this._secondTile.state()])
         return [this._tile.state(), this._secondTile.state()];
     }
 
     gameState() {
         return this._gameState;
     }
-    setMarked() {
-        return this._tile.setMarked()
-    }
 
+    setMarked() {
+        return this._tile.setMarked();
+    }
 }

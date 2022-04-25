@@ -2,9 +2,8 @@
 export const tileStates = {
     CLOSED: 0,
     OPENED: 1,
-    ONE: 2,
-    MINE: 3,
-    MARKED: 4
+    MINE: 2,
+    MARKED: 3
 };
 
 
@@ -14,32 +13,25 @@ export class Tile {
     constructor(hasMine = false) {
         this._hasMine = hasMine;
     }
-    aroundMine(numberMine) {
-        if (numberMine === 0){
-            return false;
-        }
-        else if (numberMine === 1){
-            return true;
-        }
+
+    stateOfOnlyTile(){
+        return this._hasMine;
     }
+
     setMarked() {
         this._tileState = tileStates.MARKED;
         return this._hasMine;
     }
 
-    openTile(number = 0) {
+    openTile() {
         if (this._tileState === tileStates.MARKED){
             this._tileState = tileStates.MARKED;
             return;
         }
         if (this._hasMine) {
             this._tileState = tileStates.MINE;
-            return this._hasMine;
-        } else if (number === 0){
+        } else {
             this._tileState = tileStates.OPENED;
-        }
-        else if (number === 1){
-            this._tileState = tileStates.ONE;
         }
         return this._hasMine;
     }
