@@ -8,40 +8,42 @@ export const gameStates = {
 
 export class Buscaminas {
     _gameState = gameStates.PLAYING;
-    _tile;
-    _secondTile;
+    _tiles = [];
     constructor(hasMine = [false, false]) {
-        this._tile = new Tile(hasMine[0]);
-        this._secondTile = new Tile(hasMine[1]);
+        this._tiles = [new Tile(hasMine[0]), new Tile(hasMine[1])]
     }
 
+    isThatTile(numberTile){
+        if (this._tiles.length -1 < numberTile +1){
+            return numberTile -1;
+        }else{
+            return numberTile +1;
+        }
+    }
 
-
-    openTile() {
-        const wasMine = this._tile.openTile();
+    openTile(tile) {
+        const wasMine = this._tiles[tile].openTile();
         if (wasMine) {
             this._gameState = gameStates.LOST;
         } else {
-            if(!this._secondTile.stateOfOnlyTile()){
-                this._secondTile.openTile();
+            if (!this._tiles[this.isThatTile(tile)].hasMine()) {
+                this._tiles[this.isThatTile(tile)].openTile();
+                this._gameState = gameStates.WON;
+            }
+        }
+    }
+    /*openSecondTile() {
+        const wasMine = this._tiles[1].openTile();
+        if (wasMine) {
+            this._gameState = gameStates.LOST;
+        } else {
+            if(!this._tiles[0].hasMine()){
+                this._tiles[0].openTile();
                 this._gameState = gameStates.WON;
             }
             else{}
         }
-    }
-
-    openSecondTile() {
-        const wasMine = this._secondTile.openTile();
-        if (wasMine) {
-            this._gameState = gameStates.LOST;
-        } else {
-            if(!this._tile.stateOfOnlyTile()){
-                this._tile.openTile();
-                this._gameState = gameStates.WON;
-            }
-            else{}
-        }
-    }
+    }*/
 
     markTile(tile) {
         const wasMine = this.setMarked(tile);
@@ -55,7 +57,8 @@ export class Buscaminas {
     }
 
     tileState() {
-        return [this._tile.state(), this._secondTile.state()];
+        console.log(this._tiles[1].state())
+        return [this._tiles[0].state(), this._tiles[1].state()];
     }
 
     gameState() {
@@ -64,10 +67,10 @@ export class Buscaminas {
 
     setMarked(tile) {
         if(tile === 1){
-            return this._tile.setMarked();
+            return this._tiles[0].setMarked();
         }
         else if (tile === 2){
-            return this._secondTile.setMarked();
+            return this._tiles[1].setMarked();
         }
     }
 }

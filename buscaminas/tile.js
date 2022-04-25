@@ -14,7 +14,7 @@ export class Tile {
         this._hasMine = hasMine;
     }
 
-    stateOfOnlyTile(){
+    hasMine(){
         return this._hasMine;
     }
 
@@ -25,7 +25,6 @@ export class Tile {
 
     openTile() {
         if (this._tileState === tileStates.MARKED){
-            this._tileState = tileStates.MARKED;
             return;
         }
         if (this._hasMine) {
