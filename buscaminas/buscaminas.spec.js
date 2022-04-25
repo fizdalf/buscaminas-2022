@@ -113,6 +113,10 @@ describe('Buscaminas', () => {
         buscaminas.openTile(1);
         expect(buscaminas.gameState()).toBe(gameStates.LOST)
     });
+    it.only('should throw an error when both tiles have mines', () => {
+        const buscaminas = new Buscaminas([true, true]);
+        expect(() => {buscaminas}).toThrowError("This is impossible");
+    });
 });
 
 

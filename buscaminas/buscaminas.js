@@ -11,6 +11,9 @@ export class Buscaminas {
     _tiles = [];
     constructor(hasMine = [true, false]) {
         this._tiles = [new Tile(hasMine[0]), new Tile(hasMine[1])]
+        if (this._tiles[0] === this._tiles[1]){
+            throw new Error("This is impossible");
+        }
     }
 
     isThatTile(numberTile){
