@@ -11,7 +11,7 @@ describe('Buscaminas', () => {
     });
 
     it('should consider that the game is lost when a mine is found', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas(true);
         buscaminas.openTile();
         const expected = gameStates.LOST;
         const output = buscaminas.gameState();
@@ -24,7 +24,7 @@ describe('Buscaminas', () => {
         expect(buscaminas.gameState()).toBe(expected);
     });
     it('should consider that the game is won when tiles with mine are marked', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas(true);
         buscaminas.markTile();
         const expected = gameStates.WON;
         const output = buscaminas.gameState();
@@ -38,7 +38,7 @@ describe('Buscaminas', () => {
         expect(output).toBe(expected);
     });
 
-    it('should start the game with a closed tile', () => {
+    it('should start the game with a closed tiles', () => {
         const buscaminas = new Buscaminas();
         expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.CLOSED]);
     });
@@ -51,8 +51,8 @@ describe('Buscaminas', () => {
     });
 
     it('should show a mine in the tile after opening a tile with a mine', () => {
-        const buscaminas = new Buscaminas();
-        buscaminas.openTile();
+        const buscaminas = new Buscaminas(true);
+        buscaminas.openTile(0);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.MINE, tileStates.CLOSED]);
     });
 
@@ -68,21 +68,21 @@ describe('Buscaminas', () => {
         buscaminas.openTile();
         expect(buscaminas.tileState()).toStrictEqual([tileStates.MARKED, tileStates.CLOSED]);
     });
-    /*it.only('should throw an error when you lost the game and mark a tile',  () => {
-        const buscaminas = new Buscaminas(true);
-        buscaminas.openTile();
-        expect(buscaminas.markTile()).toThrow("Error")
-    });*/
     it('should open the tile of side when is empty', () => {
         const buscaminas = new Buscaminas();
         buscaminas.openTile(0);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.OPENED, tileStates.OPENED]);
     });
-    it.only('should let close the tile of side when have a mine', () => {
+    it('should let close the tile of side when have a mine', () => {
         const buscaminas = new Buscaminas();
         buscaminas.openTile(1);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.ONE, tileStates.CLOSED]);
     });
+    /*it.only('should throw an error when you lost the game and mark a tile',  () => {
+    const buscaminas = new Buscaminas(true);
+    buscaminas.openTile();
+    expect(buscaminas.markTile()).toThrow("Error")
+});*/
 });
 
 

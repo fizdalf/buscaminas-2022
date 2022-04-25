@@ -14,7 +14,14 @@ export class Tile {
     constructor(hasMine = false) {
         this._hasMine = hasMine;
     }
-
+    aroundMine(numberMine) {
+        if (numberMine === 0){
+            return false;
+        }
+        else if (numberMine === 1){
+            return true;
+        }
+    }
     setMarked() {
         this._tileState = tileStates.MARKED;
         return this._hasMine;
@@ -27,6 +34,7 @@ export class Tile {
         }
         if (this._hasMine) {
             this._tileState = tileStates.MINE;
+            return this._hasMine;
         } else if (number === 0){
             this._tileState = tileStates.OPENED;
         }

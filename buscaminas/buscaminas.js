@@ -10,14 +10,12 @@ export class Buscaminas {
     _gameState = gameStates.PLAYING;
     _tile;
     _secondTile;
-
-    constructor() {
-        this._tile = new Tile(false);
-        this._secondTile = new Tile(true);
+    constructor(hasMine){
+        this._tile = new Tile(hasMine);
     }
-
     openTile(number) {
         const wasMine = this._tile.openTile(number);
+        this._secondTile = new Tile(this._tile.aroundMine(number))
         if (wasMine) {
             this._gameState = gameStates.LOST;
         } else {
@@ -38,6 +36,9 @@ export class Buscaminas {
         }
 
     tileState() {
+        if(this._secondTile === undefined){
+            this._secondTile = new Tile()
+        }
         return [this._tile.state(), this._secondTile.state()];
     }
 
@@ -45,7 +46,7 @@ export class Buscaminas {
         return this._gameState;
     }
     setMarked() {
-        return this._tile.setMarked();
+        return this._tile.setMarked()
     }
 
 }
