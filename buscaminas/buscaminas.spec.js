@@ -4,7 +4,7 @@ import {tileStates} from "./tile.js";
 describe('Buscaminas', () => {
     it('should consider the game is won when there is no tiles left to open', () => {
         const buscaminas = new Buscaminas();
-        buscaminas.openTile(0);
+        buscaminas.markTile(1);
         const expected = gameStates.WON;
         const output = buscaminas.gameState();
         expect(output).toBe(expected);
@@ -32,7 +32,7 @@ describe('Buscaminas', () => {
     });
     it('should consider that the game is not won when tiles empty are marked', () => {
         const buscaminas = new Buscaminas();
-        buscaminas.markTile(1);
+        buscaminas.markTile(2);
         const expected = gameStates.PLAYING;
         const output = buscaminas.gameState();
         expect(output).toBe(expected);
@@ -55,11 +55,7 @@ describe('Buscaminas', () => {
         buscaminas.openTile(0);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.MINE, tileStates.CLOSED]);
     });
-    it('should open the tile of side when is empty', () => {
-        const buscaminas = new Buscaminas();
-        buscaminas.openTile(0);
-        expect(buscaminas.tileState()).toStrictEqual([tileStates.OPENED, tileStates.OPENED]);
-    });
+
     it('it should leave tiles with mines closed when a tile next to it is opened', () => {
         const buscaminas = new Buscaminas([false, true]);
         buscaminas.openTile(0);
@@ -75,11 +71,6 @@ describe('Buscaminas', () => {
         const buscaminas = new Buscaminas([true, false]);
         buscaminas.openTile(1);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.OPENED]);
-    });
-    it('should open the tile of side when is empty, but starting for the second tile', () => {
-        const buscaminas = new Buscaminas();
-        buscaminas.openTile(1);
-        expect(buscaminas.tileState()).toStrictEqual([tileStates.OPENED, tileStates.OPENED]);
     });
 
     it('should consider that the game is lost when a mine is found', () => {
@@ -100,7 +91,7 @@ describe('Buscaminas', () => {
         expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.MINE]);
     });
     it('should consider when the second tile are marked it cannot be open the second tile', () => {
-        const buscaminas = new Buscaminas([false, false]);
+        const buscaminas = new Buscaminas([true, false]);
         buscaminas.markTile(2);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.MARKED]);
     });
