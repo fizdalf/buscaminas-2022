@@ -3,7 +3,7 @@ import {tileStates} from "./tile.js";
 
 describe('Buscaminas', () => {
     it('should consider the game is won when there is no tiles left to open', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas([true, false]);
         buscaminas.markTile(1);
         const expected = gameStates.WON;
         const output = buscaminas.gameState();
@@ -19,7 +19,7 @@ describe('Buscaminas', () => {
     });
 
     it('should consider the game is playing when is just started', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas([true, false]);
         const expected = gameStates.PLAYING;
         expect(buscaminas.gameState()).toBe(expected);
     });
@@ -31,7 +31,7 @@ describe('Buscaminas', () => {
         expect(output).toBe(expected);
     });
     it('should consider that the game is not won when tiles empty are marked', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas([true, false]);
         buscaminas.markTile(2);
         const expected = gameStates.PLAYING;
         const output = buscaminas.gameState();
@@ -39,13 +39,13 @@ describe('Buscaminas', () => {
     });
 
     it('should start the game with a closed tiles', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas([true, false]);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.CLOSED]);
     });
 
 
     it('should show a marked tile after marking a tile', () => {
-        const buscaminas = new Buscaminas();
+        const buscaminas = new Buscaminas([true, false]);
         buscaminas.markTile(1);
         expect(buscaminas.tileState()).toStrictEqual([tileStates.MARKED, tileStates.CLOSED]);
     });
@@ -113,9 +113,11 @@ describe('Buscaminas', () => {
         buscaminas.openTile(1);
         expect(buscaminas.gameState()).toBe(gameStates.LOST)
     });
-    it.only('should throw an error when both tiles have mines', () => {
-        const buscaminas = new Buscaminas([true, true]);
-        expect(() => {buscaminas}).toThrowError("This is impossible");
+    it('should throw an error when all tiles have mines', () => {
+        expect(() => { new Buscaminas([true, true]);}).toThrowError("The board has to have at least one mine, and at least one empty tile");
+    });
+    it('should throw an error when all tiles are empty', () => {
+        expect(() => { new Buscaminas([false, false]);}).toThrowError("The board has to have at least one mine, and at least one empty tile");
     });
 });
 

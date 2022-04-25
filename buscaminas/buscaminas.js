@@ -8,19 +8,31 @@ export const gameStates = {
 
 export class Buscaminas {
     _gameState = gameStates.PLAYING;
-    _tiles = [];
-    constructor(hasMine = [true, false]) {
-        this._tiles = [new Tile(hasMine[0]), new Tile(hasMine[1])]
-        if (this._tiles[0] === this._tiles[1]){
-            throw new Error("This is impossible");
+    _tiles;
+
+    constructor(mines) {
+        if (!this.checkValidMines(mines)) {
+            throw new Error("The board has to have at least one mine, and at least one empty tile");
         }
+        this.generateTiles(mines);
     }
 
-    isThatTile(numberTile){
-        if (this._tiles.length -1 < numberTile +1){
-            return numberTile -1;
-        }else{
-            return numberTile +1;
+    checkValidMines(mines) {
+        let beforeMine = undefined;
+        for (const mine of mines) {
+            if (beforeMine !== undefined && mine !== beforeMine) {
+                return true;
+            }
+            beforeMine = mine;
+        }
+        return false;
+    }
+
+    isThatTile(numberTile) {
+        if (this._tiles.length - 1 < numberTile + 1) {
+            return numberTile - 1;
+        } else {
+            return numberTile + 1;
         }
     }
 
@@ -35,9 +47,10 @@ export class Buscaminas {
             }
         }
     }
+
     markTile(tile) {
         const wasMine = this.setMarked(tile);
-        if (this._gameState === gameStates.LOST){
+        if (this._gameState === gameStates.LOST) {
             return;
         }
         if (wasMine) {
@@ -54,11 +67,13 @@ export class Buscaminas {
     }
 
     setMarked(tile) {
-        if(tile === 1){
-            return this._tiles[0].setMarked();
-        }
-        else if (tile === 2){
-            return this._tiles[1].setMarked();
+        return this._tiles[tile - 1].setMarked();
+    }
+
+    generateTiles(mines) {
+        this._tiles = [];// map
+        for (const mine of mines) {
+            this._tiles.push(new Tile(mine));
         }
     }
 }
