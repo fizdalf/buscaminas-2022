@@ -1,4 +1,4 @@
-import {Tile, tileStates} from "./tile.js";
+import {Tile} from "./tile.js";
 
 export const gameStates = {
     PLAYING: 0,
@@ -28,23 +28,25 @@ export class Buscaminas {
         return false;
     }
 
-    isThatTile(numberTile) {
+    whatTile(numberTile) {
         if (this._tiles.length - 1 < numberTile + 1) {
-            return numberTile - 1;
+            return numberTile -1;
         } else {
-            return numberTile + 1;
+            return numberTile +1;
         }
     }
-
+    hasMine(tile){
+        return !this._tiles[this.whatTile(tile)].hasMine()
+    }
     openTile(tile) {
         const wasMine = this._tiles[tile].openTile();
+        const whatTile = this.whatTile(tile)
         if (wasMine) {
             this._gameState = gameStates.LOST;
-        } else {
-            if (!this._tiles[this.isThatTile(tile)].hasMine()) {
-                this._tiles[this.isThatTile(tile)].openTile();
-                this._gameState = gameStates.WON;
-            }
+            return;
+        }if (this.hasMine(tile)) {
+            this._tiles[whatTile].openTile();
+            this._gameState = gameStates.WON;
         }
     }
 
@@ -59,7 +61,11 @@ export class Buscaminas {
     }
 
     tileState() {
-        return [this._tiles[0].state(), this._tiles[1].state()];
+        let result;
+        result = this._tiles.map((tile) => {
+            return tile.state()
+        });
+        return result;
     }
 
     gameState() {
@@ -71,9 +77,8 @@ export class Buscaminas {
     }
 
     generateTiles(mines) {
-        this._tiles = [];// map
-        for (const mine of mines) {
-            this._tiles.push(new Tile(mine));
-        }
+        this._tiles = mines.map((mine)=> {
+            return new Tile(mine)
+        });
     }
 }

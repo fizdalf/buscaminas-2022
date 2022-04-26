@@ -19,6 +19,10 @@ export class Tile {
     }
 
     setMarked() {
+        if(this._tileState === tileStates.MARKED){
+            this._tileState = tileStates.CLOSED;
+            return;
+        }
         this._tileState = tileStates.MARKED;
         return this._hasMine;
     }

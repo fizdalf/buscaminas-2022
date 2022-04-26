@@ -1,5 +1,5 @@
 import {Buscaminas, gameStates} from "./buscaminas";
-import {tileStates} from "./tile.js";
+import {Tile, tileStates} from "./tile.js";
 
 describe('Buscaminas', () => {
     it('should consider the game is won when there is no tiles left to open', () => {
@@ -113,15 +113,41 @@ describe('Buscaminas', () => {
         buscaminas.openTile(1);
         expect(buscaminas.gameState()).toBe(gameStates.LOST)
     });
-    it('should throw an error when all tiles have mines', () => {
-        expect(() => { new Buscaminas([true, true]);}).toThrowError("The board has to have at least one mine, and at least one empty tile");
-    });
     it('should throw an error when all tiles are empty', () => {
         expect(() => { new Buscaminas([false, false]);}).toThrowError("The board has to have at least one mine, and at least one empty tile");
     });
+    it('should unmarked when try mark a tile for the second time', () => {
+        const buscaminas = new Buscaminas([false, true])
+        buscaminas.markTile(1);
+        buscaminas.markTile(1);
+        expect(buscaminas.tileState()).toStrictEqual([tileStates.CLOSED, tileStates.CLOSED])
+    });
 });
+describe("Tile", () => {
+   it("should return false when received false", () => {
+       const tile = new Tile(false)
+       expect(tile.hasMine()).toBe(false)
+   });
+    it("should return true when received true", () => {
+        const tile = new Tile(true)
+        expect(tile.hasMine()).toBe(true)
+    });
+    it("should show marked tile", () => {
+        const tile = new Tile()
+        tile.setMarked()
+        expect(tile.state()).toBe(tileStates.MARKED)
+    });
+    it("should show opened tile", () => {
+        const tile = new Tile()
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.OPENED)
+    });
+    it("should show tile with mine", () => {
+        const tile = new Tile(true)
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.MINE)
+    });
+    
+    
 
-
-
-
-
+});
