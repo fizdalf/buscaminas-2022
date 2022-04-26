@@ -1,4 +1,4 @@
-import {Tile} from "./tile.js";
+import {Tile, tileStates} from "./tile.js";
 
 export const gameStates = {
     PLAYING: 0,
@@ -30,34 +30,39 @@ export class Buscaminas {
 
     whatTile(numberTile) {
         if (this._tiles.length - 1 < numberTile + 1) {
-            return numberTile -1;
+            return numberTile - 1;
         } else {
-            return numberTile +1;
-        }
-    }
-    hasMine(tile){
-        return !this._tiles[this.whatTile(tile)].hasMine()
-    }
-    openTile(tile) {
-        const wasMine = this._tiles[tile].openTile();
-        const whatTile = this.whatTile(tile)
-        if (wasMine) {
-            this._gameState = gameStates.LOST;
-            return;
-        }if (this.hasMine(tile)) {
-            this._tiles[whatTile].openTile();
-            this._gameState = gameStates.WON;
+            return numberTile + 1;
         }
     }
 
-    markTile(tile) {
-        const wasMine = this.setMarked(tile);
-        if (this._gameState === gameStates.LOST) {
+    hasMine(tile) {
+        return this._tiles[tile].hasMine()
+    }
+    areWon() {
+        for (const tile of this._tiles){
+            if (tile.state() === tileStates.CLOSED && !tile.hasMine()) {
+                this._gameState = gameStates.PLAYING;
+            }
+        }this._gameState = gameStates.WON;
+    }
+
+    openTile(tile) {
+        const wasMine = this._tiles[tile].openTile();
+        if (wasMine) {
+            this._gameState = gameStates.LOST;
             return;
         }
-        if (wasMine) {
-            this._gameState = gameStates.WON;
+        if (!this.hasMine(this.whatTile(tile))) {
+            this._tiles[this.whatTile(tile)].openTile();
         }
+        this.areWon()
+    }
+
+    markAndUnmarkTile(tile) {
+        if (this._gameState === gameStates.LOST) {
+            return;
+        }this.setMarked(tile);
     }
 
     tileState() {
@@ -73,11 +78,11 @@ export class Buscaminas {
     }
 
     setMarked(tile) {
-        return this._tiles[tile - 1].setMarked();
+        return this._tiles[tile].setMarked();
     }
 
     generateTiles(mines) {
-        this._tiles = mines.map((mine)=> {
+        this._tiles = mines.map((mine) => {
             return new Tile(mine)
         });
     }
