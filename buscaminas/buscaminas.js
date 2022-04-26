@@ -11,13 +11,10 @@ export class Buscaminas {
     _tiles;
 
     constructor(mines) {
-        if (!this.checkValidMines(mines)) {
-            throw new Error("The board has to have at least one mine, and at least one empty tile");
-        }
-        this.generateTiles(mines);
+        this._generateTiles(mines);
     }
 
-    checkValidMines(mines) {
+    _checkValidMines(mines) {
         let beforeMine = undefined;
         for (const mine of mines) {
             if (beforeMine !== undefined && mine !== beforeMine) {
@@ -28,7 +25,47 @@ export class Buscaminas {
         return false;
     }
 
-    whatTile(numberTile) {
+    updateGameStatus(wasMine) {
+        if (wasMine) {
+            this._gameState = gameStates.LOST;
+            return;
+        }
+        if(this._areThereClosedTilesWithoutMines()){
+            return;
+        }
+        this._gameState = gameStates.WON;
+    }
+
+    openTile(tile) {
+        const wasMine = this._openTile(tile);
+        this.updateGameStatus(wasMine);
+    }
+
+    markAndUnmarkTile(tile) {
+        if (this._gameState === gameStates.LOST) {
+            return;
+        }
+        this._toggleMarked(tile);
+    }
+
+    gameState() {
+        return this._gameState;
+    }
+
+    tileState() {
+        return this._tileState();
+    }
+
+    _areThereClosedTilesWithoutMines(){
+        for (const tile of this._tiles){
+            if (tile.state() === tileStates.CLOSED && !tile.hasMine()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    _sideTile(numberTile) {
         if (this._tiles.length - 1 < numberTile + 1) {
             return numberTile - 1;
         } else {
@@ -36,36 +73,7 @@ export class Buscaminas {
         }
     }
 
-    hasMine(tile) {
-        return this._tiles[tile].hasMine()
-    }
-    areWon() {
-        for (const tile of this._tiles){
-            if (tile.state() === tileStates.CLOSED && !tile.hasMine()) {
-                this._gameState = gameStates.PLAYING;
-            }
-        }this._gameState = gameStates.WON;
-    }
-
-    openTile(tile) {
-        const wasMine = this._tiles[tile].openTile();
-        if (wasMine) {
-            this._gameState = gameStates.LOST;
-            return;
-        }
-        if (!this.hasMine(this.whatTile(tile))) {
-            this._tiles[this.whatTile(tile)].openTile();
-        }
-        this.areWon()
-    }
-
-    markAndUnmarkTile(tile) {
-        if (this._gameState === gameStates.LOST) {
-            return;
-        }this.setMarked(tile);
-    }
-
-    tileState() {
+    _tileState(){
         let result;
         result = this._tiles.map((tile) => {
             return tile.state()
@@ -73,17 +81,35 @@ export class Buscaminas {
         return result;
     }
 
-    gameState() {
-        return this._gameState;
+    _toggleMarked(tile) {
+        return this._tiles[tile].toggleMarked();
     }
 
-    setMarked(tile) {
-        return this._tiles[tile].setMarked();
-    }
-
-    generateTiles(mines) {
+    _generateTiles(mines) {
+        if (!this._checkValidMines(mines)) {
+            throw new Error("The board has to have at least one mine, and at least one empty tile");
+        }
         this._tiles = mines.map((mine) => {
             return new Tile(mine)
         });
+    }
+
+    _openTile(tile) {
+        const wasMine = this._tiles[tile].openTile();
+        if (wasMine) {
+            return true;
+        }
+        this._openNeighborTiles(tile);
+        return false;
+    }
+
+    _hasMine(tile) {
+        return this._tiles[tile].hasMine()
+    }
+
+    _openNeighborTiles(tile) {
+        if (!this._hasMine(this._sideTile(tile))) {
+            this._tiles[this._sideTile(tile)].openTile();
+        }
     }
 }

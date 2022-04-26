@@ -3,7 +3,7 @@ import {Tile, tileStates} from "./tile.js";
 describe("Tile", () => {
     it("should show marked tile", () => {
         const tile = new Tile()
-        tile.setMarked()
+        tile.toggleMarked()
         expect(tile.state()).toBe(tileStates.MARKED)
     });
     it("should show opened tile", () => {
@@ -18,8 +18,8 @@ describe("Tile", () => {
     });
     it("should unmarked tile when try marked for second time", () =>{
         const tile = new Tile(true)
-        tile.setMarked()
-        tile.setMarked()
+        tile.toggleMarked()
+        tile.toggleMarked()
         expect(tile.state()).toBe(tileStates.CLOSED)
     });
 });

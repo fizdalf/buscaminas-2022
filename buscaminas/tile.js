@@ -18,7 +18,7 @@ export class Tile {
         return this._hasMine;
     }
 
-    setMarked() {
+    toggleMarked() {
         if(this._tileState === tileStates.MARKED){
             this._tileState = tileStates.CLOSED;
             return;
