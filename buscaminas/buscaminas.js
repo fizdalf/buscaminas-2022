@@ -1,4 +1,4 @@
-import {TilesManager} from "./tilesManager.js";
+import { TilesManager} from "./tilesManager.js";
 
 export const gameStates = {
     PLAYING: 0,

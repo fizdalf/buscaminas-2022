@@ -1,13 +1,7 @@
 import {Tile, tileStates} from "./tile.js";
 
-export class TilesManager {
-    #tiles
-
-    constructor(mines) {
-        this.#generateTiles(mines);
-    }
-
-    #checkValidMines(mines) {
+export class MinesChecker {
+    checkMines(mines){
         let beforeMine = undefined;
         for (const mine of mines) {
             if (beforeMine !== undefined && mine !== beforeMine) {
@@ -17,7 +11,14 @@ export class TilesManager {
         }
         return false;
     }
+}
 
+export class TilesManager {
+    #tiles
+    #minesChecker = new MinesChecker();
+    constructor(mines) {
+        this.#generateTiles(mines);
+    }
     areThereClosedTilesWithoutMines() {
         for (const tile of this.#tiles) {
             if (tile.state() === tileStates.CLOSED && !tile.hasMine()) {
@@ -47,8 +48,10 @@ export class TilesManager {
         return this.#tiles[tile].toggleMarked();
     }
 
+
     #generateTiles(mines) {
-        if (!this.#checkValidMines(mines)) {
+        let boolean = this.#minesChecker.checkMines(mines);
+        if (!boolean) {
             throw new Error("The board has to have at least one mine, and at least one empty tile");
         }
         this.#tiles = mines.map((mine) => {
