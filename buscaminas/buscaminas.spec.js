@@ -1,6 +1,7 @@
 import {Buscaminas, gameStates} from "./buscaminas";
 import {tileStates} from "./tile.js";
 describe('Buscaminas', () => {
+    //TODO: extraer tests que pertenezcan a TileManager, y crear los que sean necesarios
     it('should consider that the game is lost when a mine is found', () => {
         const buscaminas = new Buscaminas([true, false]);
         buscaminas.openTile(1);

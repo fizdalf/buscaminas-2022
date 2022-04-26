@@ -20,6 +20,7 @@ export class TilesManager {
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
+        //TODO: reescribir con funciones de array
         for (const tile of this.#tiles) {
             if (tile.state() === tileStates.CLOSED && !tile.hasMine()) {
                 return true;
@@ -29,27 +30,23 @@ export class TilesManager {
     }
 
     #sideTile(numberTile) {
+        let modifier = + 1
         if (this.#tiles.length - 1 < numberTile + 1) {
-            return numberTile - 1;
-        } else {
-            return numberTile + 1;
+            modifier = - 1;
         }
+        return numberTile + modifier;
     }
 
     tileState() {
-        let result;
-        result = this.#tiles.map((tile) => {
-            return tile.state()
-        });
-        return result;
+        return this.#tiles.map((tile) => tile.state());
     }
 
     toggleMarked(tile) {
         return this.#tiles[tile].toggleMarked();
     }
 
-
     #generateTiles(mines) {
+        //TODO: extraer abstracción
         let boolean = this.#minesChecker.checkMines(mines);
         if (!boolean) {
             throw new Error("The board has to have at least one mine, and at least one empty tile");
@@ -73,8 +70,10 @@ export class TilesManager {
     }
 
     #openNeighborTiles(tile) {
-        if (!this.#hasMine(this.#sideTile(tile))) {
-            this.#tiles[this.#sideTile(tile)].openTile();
+        //TODO: tratar de expresar mejor la condición
+        if (this.#hasMine(this.#sideTile(tile))) {
+            return;
         }
+        this.#tiles[this.#sideTile(tile)].openTile();
     }
 }
