@@ -19,7 +19,7 @@ export class MinesChecker {
 }
 
 export class TilesManager {
-    #tiles
+    #tiles;
     #minesChecker = new MinesChecker();
     constructor(mines) {
         this.#generateTiles(mines);
@@ -27,15 +27,6 @@ export class TilesManager {
     areThereClosedTilesWithoutMines() {
         return this.#tiles.some(tile => tile.state() === tileStates.CLOSED && !tile.hasMine())
     }
-
-    #sideTile(numberTile) {
-        let modifier = + 1
-        if (this.#tiles.length - 1 < numberTile + 1) {
-            modifier = - 1;
-        }
-        return numberTile + modifier;
-    }
-
     tileState() {
         return this.#tiles.map((tile) => tile.state());
     }
@@ -56,7 +47,7 @@ export class TilesManager {
         if (wasMine) {
             return true;
         }
-        this.#openNeighborTiles(tile);
+        this.#openNeighborTiles();
         return false;
     }
 
@@ -64,11 +55,11 @@ export class TilesManager {
         return this.#tiles[tile].hasMine()
     }
 
-    #openNeighborTiles(tile) {
-        const sideTile = this.#sideTile(tile)
-        if (this.#hasMine(sideTile)) {
-            return;
+    #openNeighborTiles() {
+        for(const tile in this.#tiles){
+            if(!this.#hasMine(tile)){
+                this.#tiles[tile].openTile()
+            }
         }
-        this.#tiles[this.#sideTile(tile)].openTile();
     }
 }
