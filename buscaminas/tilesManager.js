@@ -1,6 +1,7 @@
 import {Tile, tileStates} from "./tile.js";
 
 export class MinesChecker {
+
     checkMines(mines){
         let beforeMine = undefined;
         for (const line of mines) {
@@ -20,10 +21,13 @@ export class MinesChecker {
     }
 }
 
+
 export class TilesManager {
     #tiles;
     #minesChecker = new MinesChecker();
+    numberMines;
     constructor(mines) {
+        this.numberMines = mines
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
@@ -34,7 +38,17 @@ export class TilesManager {
             return line.map((tile) => tile.state())
         })
     }
+    numberOfMine(mines){
 
+        let numberMine = 0;
+        for (const line of mines){
+            for(const tile of line){
+                if(tile){
+                    numberMine++;
+                }
+            }
+        }return numberMine;
+    }
     toggleMarked(line, tile) {
         return this.#tiles[line][tile].toggleMarked();
     }
@@ -53,6 +67,7 @@ export class TilesManager {
         if (wasMine) {
             return true;
         }
+        this.#tiles[line][tile].numberOfMine(this.numberOfMine(this.numberMines))
         this.#openNeighborTiles();
         return false;
     }
@@ -60,6 +75,7 @@ export class TilesManager {
         for(const line of this.#tiles){
             for(const tile of line){
                 if(!tile.hasMine()){
+                    tile.numberOfMine(this.numberOfMine(this.numberMines))
                     tile.openTile()
                 }
             }

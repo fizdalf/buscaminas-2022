@@ -2,8 +2,11 @@
 export const tileStates = {
     CLOSED: 0,
     OPENED: 1,
-    MINE: 2,
-    MARKED: 3
+    ONE: 2,
+    TWO: 3,
+    THREE: 4,
+    MINE: 5,
+    MARKED: 6
 };
 
 
@@ -26,9 +29,26 @@ export class Tile {
         this._tileState = tileStates.MARKED;
         return this._hasMine;
     }
+    numberOfMine(numberMine){
+        if(numberMine === 0){
+            this._tileState = tileStates.OPENED;
+        }
+        else if(numberMine === 1){
+            this._tileState = tileStates.ONE;
+        }
+        else if(numberMine === 2){
+            this._tileState = tileStates.TWO;
+        }
+        else if(numberMine === 3){
+            this._tileState = tileStates.THREE;
+        }
+    }
 
     openTile() {
         if (this._tileState === tileStates.MARKED){
+            return;
+        }
+        if(this._tileState === tileStates.ONE || this._tileState === tileStates.TWO || this._tileState === tileStates.THREE){
             return;
         }
         if (this._hasMine) {
