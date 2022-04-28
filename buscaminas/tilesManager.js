@@ -3,11 +3,13 @@ import {Tile, tileStates} from "./tile.js";
 export class MinesChecker {
     checkMines(mines){
         let beforeMine = undefined;
-        for (const mine of mines) {
-            if (beforeMine !== undefined && mine !== beforeMine) {
-                return true;
+        for (const line of mines) {
+            for(const mine of line){
+                if (beforeMine !== undefined && mine !== beforeMine) {
+                    return true;
+                }
+                beforeMine = mine;
             }
-            beforeMine = mine;
         }
         return false;
     }
@@ -25,40 +27,41 @@ export class TilesManager {
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
-        return this.#tiles.some(tile => tile.state() === tileStates.CLOSED && !tile.hasMine())
+        return this.#tiles.some(line => line.some(tile => tile.state() === tileStates.CLOSED && !tile.hasMine()))
     }
     tileState() {
-        return this.#tiles.map((tile) => tile.state());
+        return this.#tiles.map((line) => {
+            return line.map((tile) => tile.state())
+        })
     }
 
-    toggleMarked(tile) {
-        return this.#tiles[tile].toggleMarked();
+    toggleMarked(line, tile) {
+        return this.#tiles[line][tile].toggleMarked();
     }
 
     #generateTiles(mines) {
         this.#minesChecker.validMines(mines)
-        this.#tiles = mines.map((mine) => {
-            return new Tile(mine)
+        this.#tiles = mines.map((line) => {
+            return line.map((mine) => {
+                return new Tile(mine);
+            });
         });
     }
 
-    openTile(tile) {
-        const wasMine = this.#tiles[tile].openTile();
+    openTile(line, tile) {
+        const wasMine = this.#tiles[line][tile].openTile();
         if (wasMine) {
             return true;
         }
         this.#openNeighborTiles();
         return false;
     }
-
-    #hasMine(tile) {
-        return this.#tiles[tile].hasMine()
-    }
-
     #openNeighborTiles() {
-        for(const tile in this.#tiles){
-            if(!this.#hasMine(tile)){
-                this.#tiles[tile].openTile()
+        for(const line of this.#tiles){
+            for(const tile of line){
+                if(!tile.hasMine()){
+                    tile.openTile()
+                }
             }
         }
     }

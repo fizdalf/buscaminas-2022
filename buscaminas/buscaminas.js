@@ -20,29 +20,26 @@ export class Buscaminas {
             this.#gameState = gameStates.LOST;
             return;
         }
-        if (this.#tilesManager.areThereClosedTilesWithoutMines()) {
+        /*if (this.#tilesManager.areThereClosedTilesWithoutMines()) {
+            console.log("sioduwiosudiwquediqweuoiwque")
             return;
-        }
+        }*/
         this.#gameState = gameStates.WON;
     }
 
-    openTile(tile) {
-        const wasMine = this.#tilesManager.openTile(tile);
+    openTile(line, mine) {
+        const wasMine = this.#tilesManager.openTile(line, mine);
         this.updateGameStatus(wasMine);
     }
 
-    markAndUnmarkTile(tile) {
+    markAndUnmarkTile(line, tile) {
         if (this.#gameState === gameStates.LOST) {
             return;
         }
-        this.#tilesManager.toggleMarked(tile);
+        this.#tilesManager.toggleMarked(line, tile);
     }
 
     gameState() {
         return this.#gameState;
-    }
-
-    tileState() {
-        return this.#tilesManager.tileState();
     }
 }
