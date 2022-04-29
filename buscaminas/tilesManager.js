@@ -61,7 +61,6 @@ export class TilesManager {
         if (wasMine) {
             return true;
         }
-        //this.#tiles[line][tile].numberOfMine(this.numberOfMine(this.numberMines))
         if(this.#tiles[line][tile].state() === tileStates.EMPTY){
             this.#openNeighborTiles();
         }
@@ -72,7 +71,6 @@ export class TilesManager {
         for(const line of this.#tiles){
             for(const tile of line){
                 if(!tile.hasMine()){
-                    //tile.numberOfMine(this.numberOfMine(this.numberMines))
                     tile.openTile()
                 }
             }
