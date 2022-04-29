@@ -9,7 +9,7 @@ describe("Tile", () => {
     it("should show opened tile", () => {
         const tile = new Tile()
         tile.openTile()
-        expect(tile.state()).toBe(tileStates.OPENED)
+        expect(tile.state()).toBe(tileStates.EMPTY)
     });
     it("should show tile with mine", () => {
         const tile = new Tile(true)

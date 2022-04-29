@@ -21,19 +21,15 @@ describe("tileManager", () => {
         tilemanager.openTile(0, 0);
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.THREE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
-    it('should let close the tile of side when have a mine, but starting for the second tile', () => {
+    it('should let close all tiles are not empty', () => {
         const tilemanager = new TilesManager([[true, false], [false, false]]);
         tilemanager.openTile(0, 1);
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.ONE, tileStates.ONE]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
-    it('should let close the tile of side when have a mine, but starting for the second tile', () => {
-        const tilemanager = new TilesManager([[true, false], [false, false]]);
-        tilemanager.openTile(0, 0);
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.ONE, tileStates.ONE]]);
-    });
+
     it('should show a mine in the tile after opening a tile with a mine', () => {
         const tilemanager = new TilesManager([[false, true], [false, false]]);
-        tilemanager.openTile(0, 0);
+        tilemanager.openTile(0, 1);
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.MINE], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
     it('should consider when the second tile are marked it cannot be open', () => {
@@ -45,7 +41,7 @@ describe("tileManager", () => {
         const tilemanager = new TilesManager([[false, true], [false, false]]);
         tilemanager.openTile(0, 0);
         tilemanager.toggleMarked(0, 1)
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.ONE, tileStates.MARKED], [tileStates.ONE, tileStates.ONE]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.ONE, tileStates.MARKED], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
     it('should unmarked when try mark a tile for the second time', () => {
         const tilemanager = new TilesManager([[false, true], [false, false]]);
@@ -56,12 +52,13 @@ describe("tileManager", () => {
     it('should show the first tile closed and the second open', () => {
         const tilemanager = new TilesManager([[true, false], [false, false]]);
         tilemanager.openTile(0, 1);
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.ONE, tileStates.ONE]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
 
     it('should show two tiles close and two tiles open when we open a empty tile', function () {
         const tilemanager = new TilesManager([[false, true], [true, false]]);
         tilemanager.openTile(0, 0);
+        tilemanager.openTile(1, 1);
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.TWO, tileStates.CLOSED], [tileStates.CLOSED, tileStates.TWO]]);
     });
     it('should show two tiles close and two tiles open when we open a empty tile', function () {
@@ -82,13 +79,13 @@ describe("tileManager", () => {
     it('should have one mine when the tile have one', function () {
         const tilemanager = new TilesManager([[true, false], [false, false]])
         tilemanager.openTile(0, 1)
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.ONE, tileStates.ONE]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
 
     it('should have two mines when the tiles have two', function () {
         const tilemanager = new TilesManager([[true, false], [true, false]])
         tilemanager.openTile(0, 1)
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.TWO]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
     it('should have three mines when the tiles have three', function () {
         const tilemanager = new TilesManager([[true, true], [true, false]])

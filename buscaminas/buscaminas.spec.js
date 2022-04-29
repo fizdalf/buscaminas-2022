@@ -1,9 +1,16 @@
 import {Buscaminas, gameStates} from "./buscaminas";
-import {tileStates} from "./tile.js";
 describe('Buscaminas', () => {
-    it('should consider that the game is lost when a mine is found', () => {
+    it('should consider the game is playing when all the tiles without mines are not opened', function () {
+        const buscaminas = new Buscaminas ([[true, false],[false, false]])
+        buscaminas.openTile(0, 1)
+        expect(buscaminas.gameState()).toBe(gameStates.PLAYING)
+    });
+
+    it('should consider that the game is won when all tiles are open', () => {
         const buscaminas = new Buscaminas([[true, false], [false, false]]);
         buscaminas.openTile(0, 1);
+        buscaminas.openTile(1, 0);
+        buscaminas.openTile(1, 1);
         expect(buscaminas.gameState()).toBe(gameStates.WON);
     });
     it('should consider that the game is lost when open the first tile and is a mine', () => {

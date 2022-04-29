@@ -25,9 +25,9 @@ export class MinesChecker {
 export class TilesManager {
     #tiles;
     #minesChecker = new MinesChecker();
-    numberMines;
+    Mines;
     constructor(mines) {
-        this.numberMines = mines
+        this.Mines = mines
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
@@ -38,16 +38,10 @@ export class TilesManager {
             return line.map((tile) => tile.state())
         })
     }
-    numberOfMine(mines){
-
+    numberOfMine(numberMines){
         let numberMine = 0;
-        for (const line of mines){
-            for(const tile of line){
-                if(tile){
-                    numberMine++;
-                }
-            }
-        }return numberMine;
+        numberMines.map((line) => numberMine = numberMine + line.filter(tile => tile === true).length)
+        return numberMine;
     }
     toggleMarked(line, tile) {
         return this.#tiles[line][tile].toggleMarked();
@@ -57,7 +51,7 @@ export class TilesManager {
         this.#minesChecker.validMines(mines)
         this.#tiles = mines.map((line) => {
             return line.map((mine) => {
-                return new Tile(mine);
+                return new Tile(mine, this.numberOfMine(this.Mines));
             });
         });
     }
@@ -67,15 +61,18 @@ export class TilesManager {
         if (wasMine) {
             return true;
         }
-        this.#tiles[line][tile].numberOfMine(this.numberOfMine(this.numberMines))
-        this.#openNeighborTiles();
+        //this.#tiles[line][tile].numberOfMine(this.numberOfMine(this.numberMines))
+        if(this.#tiles[line][tile].state() === tileStates.EMPTY){
+            this.#openNeighborTiles();
+        }
         return false;
     }
+
     #openNeighborTiles() {
         for(const line of this.#tiles){
             for(const tile of line){
                 if(!tile.hasMine()){
-                    tile.numberOfMine(this.numberOfMine(this.numberMines))
+                    //tile.numberOfMine(this.numberOfMine(this.numberMines))
                     tile.openTile()
                 }
             }

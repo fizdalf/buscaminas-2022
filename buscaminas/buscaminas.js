@@ -20,10 +20,9 @@ export class Buscaminas {
             this.#gameState = gameStates.LOST;
             return;
         }
-        /*if (this.#tilesManager.areThereClosedTilesWithoutMines()) {
-            console.log("sioduwiosudiwquediqweuoiwque")
+        if (this.#tilesManager.areThereClosedTilesWithoutMines()) {
             return;
-        }*/
+        }
         this.#gameState = gameStates.WON;
     }
 
