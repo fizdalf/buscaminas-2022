@@ -26,15 +26,11 @@ export class Tile {
     toggleMarked() {
         if(this._tileState === tileStates.MARKED){
             this._tileState = tileStates.CLOSED;
-            return;
+            return this._hasMine;
         }
         this._tileState = tileStates.MARKED;
         return this._hasMine;
     }
-    numberOfMine(numberMine){
-        this._tileState = numberMine + 1
-    }
-
     openTile() {
         if(this._tileState !== tileStates.CLOSED){
             return;
@@ -42,7 +38,7 @@ export class Tile {
         if (this._hasMine) {
             this._tileState = tileStates.MINE;
         } else {
-            this.numberOfMine(this.numberMines);
+            this._tileState = this.numberMines + 1
         }
         return this._hasMine;
     }

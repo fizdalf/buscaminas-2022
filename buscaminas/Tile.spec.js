@@ -7,7 +7,7 @@ describe("Tile", () => {
         expect(tile.state()).toBe(tileStates.MARKED)
     });
     it("should show opened tile", () => {
-        const tile = new Tile()
+        const tile = new Tile(false ,0)
         tile.openTile()
         expect(tile.state()).toBe(tileStates.EMPTY)
     });
@@ -21,5 +21,20 @@ describe("Tile", () => {
         tile.toggleMarked()
         tile.toggleMarked()
         expect(tile.state()).toBe(tileStates.CLOSED)
+    });
+    it("should show tile with a one", () => {
+        const tile = new Tile(false, 1)
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.ONE)
+    });
+    it("should show tile with a two", () => {
+        const tile = new Tile(false, 2)
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.TWO)
+    });
+    it("should show tile with a three", () => {
+        const tile = new Tile(false, 3)
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.THREE)
     });
 });

@@ -1,4 +1,4 @@
-import {MinesChecker, TilesManager} from "./tilesManager.js";
+import {TilesManager} from "./tilesManager.js";
 import {tileStates} from "./tile.js";
 
 describe("tileManager", () => {
@@ -15,6 +15,12 @@ describe("tileManager", () => {
         const tilemanager = new TilesManager([[true, false], [false, false]]);
         tilemanager.openTile(0, 0);
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.MINE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should show a tile open and a tile with mine', () => {
+        const tilemanager = new TilesManager([[false, true], [false, false]]);
+        tilemanager.openTile(0, 0);
+        tilemanager.openTile(0, 1);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.ONE, tileStates.MINE], [tileStates.CLOSED, tileStates.CLOSED]]);
     });
     it('it should leave tiles with mines closed when a tile next to it is opened', () => {
         const tilemanager = new TilesManager([[false, true], [true, true]]);
@@ -91,5 +97,8 @@ describe("tileManager", () => {
         const tilemanager = new TilesManager([[true, true], [true, false]])
         tilemanager.openTile(1, 1)
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.THREE]]);
+    });
+    it('should ', function () {
+        
     });
 });
