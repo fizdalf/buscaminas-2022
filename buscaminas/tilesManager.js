@@ -25,9 +25,7 @@ export class MinesChecker {
 export class TilesManager {
     #tiles;
     #minesChecker = new MinesChecker();
-    Mines;
     constructor(mines) {
-        this.Mines = mines
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
@@ -38,9 +36,19 @@ export class TilesManager {
             return line.map((tile) => tile.state())
         })
     }
-    numberOfMine(numberMines){
+    numberOfMine(numberMines, positionLine, positionTile){
         let numberMine = 0;
-        numberMines.map((line) => numberMine = numberMine + line.filter(tile => tile === true).length)
+    numberMines.map((line, indexLine) => {
+            if(positionLine === 0){
+                numberMine = numberMine + line.filter((tile, index) => tile && positionLine +2 !== indexLine && positionTile +2 !== index).length
+            }
+            if(positionLine === 1){
+                numberMine = numberMine + line.filter((tile, index) => tile && positionTile -2 !== index).length
+            }
+            if(positionLine === 2){
+                numberMine = numberMine + line.filter((tile, index) => tile && positionLine -2 !== indexLine && positionTile -2 !== index).length
+            }
+        });
         return numberMine;
     }
     toggleMarked(line, tile) {
@@ -49,9 +57,9 @@ export class TilesManager {
 
     #generateTiles(mines) {
         this.#minesChecker.validMines(mines)
-        this.#tiles = mines.map((line) => {
-            return line.map((mine) => {
-                return new Tile(mine, this.numberOfMine(this.Mines));
+        this.#tiles = mines.map((line, indexLine) => {
+            return line.map((tile, indexTile) => {
+                return new Tile(tile, this.numberOfMine(mines, indexLine, indexTile));
             });
         });
     }
@@ -62,15 +70,15 @@ export class TilesManager {
             return true;
         }
         if(this.#tiles[line][tile].state() === tileStates.EMPTY){
-            this.#openNeighborTiles();
+            this.#openNeighborTiles(line, tile);
         }
         return false;
     }
 
-    #openNeighborTiles() {
+    #openNeighborTiles(lines, tiles) {
         for(const line of this.#tiles){
             for(const tile of line){
-                if(!tile.hasMine()){
+                if(!tile.hasMine() && lines -2 !== this.#tiles.indexOf(line) && tiles -2 !== this.#tiles.indexOf(tile)){
                     tile.openTile()
                 }
             }

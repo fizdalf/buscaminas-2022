@@ -5,8 +5,13 @@ export const tileStates = {
     ONE: 2,
     TWO: 3,
     THREE: 4,
-    MINE: 5,
-    MARKED: 6
+    FOUR: 5,
+    FIVE: 6,
+    SIX: 7,
+    SEVEN: 8,
+    EIGHT: 9,
+    MINE: 10,
+    MARKED: 11
 };
 
 

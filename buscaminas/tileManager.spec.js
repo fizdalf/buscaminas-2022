@@ -98,7 +98,44 @@ describe("tileManager", () => {
         tilemanager.openTile(1, 1)
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.THREE]]);
     });
-    it('should ', function () {
-        
+    it('should have four mines when the tiles have four', function () {
+        const tilemanager = new TilesManager([[true, true, false], [true, false, false], [true, false, false]])
+        tilemanager.openTile(1, 1)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should have five mines when the tiles have five', function () {
+        const tilemanager = new TilesManager([[true, true, false], [true, false, true], [true, false, false]])
+        tilemanager.openTile(1, 1)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.FIVE, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should have six mines when the tiles have six', function () {
+        const tilemanager = new TilesManager([[true, true, true], [true, false, true], [true, false, false]])
+        tilemanager.openTile(1, 1)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.SIX, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should have seven mines when the tiles have seven', function () {
+        const tilemanager = new TilesManager([[true, true, true], [true, false, true], [true, true, false]])
+        tilemanager.openTile(1, 1)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.SEVEN, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should have eight mines when the tiles have eight', function () {
+        const tilemanager = new TilesManager([[true, true, true], [true, false, true], [true, true, true]])
+        tilemanager.openTile(1, 1)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.EIGHT, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it('should open the tiles of side and show the number of mines around every tiles', function () {
+        const tilemanager = new TilesManager([[true, true, false], [true, false, false], [true, false, false]])
+        tilemanager.openTile(2, 2)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.ONE],[tileStates.CLOSED, tileStates.TWO, tileStates.EMPTY]]);
+    });
+    it('should show the number of mines around the first tile', function () {
+        const tilemanager = new TilesManager([[false, false, true], [true, true, true], [false, true, false]])
+        tilemanager.openTile(0, 0)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.TWO, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
+    it.only('should show the open the tiles around the first tile', function () {
+        const tilemanager = new TilesManager([[false, false, true], [false, false, true], [false, true, true]])
+        tilemanager.openTile(0, 0)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.EMPTY, tileStates.TWO ,tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED],[tileStates.ONE, tileStates.CLOSED, tileStates.CLOSED]]);
     });
 });
