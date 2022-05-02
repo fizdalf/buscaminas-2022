@@ -138,4 +138,9 @@ describe("tileManager", () => {
         tilemanager.openTile(0, 0)
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.EMPTY, tileStates.TWO ,tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
     });
+    it.only('should show a table with 6x6', function () {
+        const tilemanager = new TilesManager([[false, false, false, false, false, false],[true, false, true, false, false, false],[false, true, false, false, true, false], [true, false, true, false, true, false],[false, true, false, false, false, false],[false, false, true, false, false, true]])
+        tilemanager.openTile(0, 5)
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.ONE, tileStates.EMPTY, tileStates.EMPTY], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.TWO, tileStates.ONE, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED,tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED,tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED,tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED,tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
+    });
 });

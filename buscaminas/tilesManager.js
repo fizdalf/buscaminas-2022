@@ -36,13 +36,13 @@ export class TilesManager {
             return line.map((tile) => tile.state())
         })
     }
-    numberOfMine(numberMines, positionLine, positionTile){
+    numberOfMine(mines, positionLine, positionTile){
         let numberMine = 0;
-        numberMines.map((line, indexLine) => {
-            if(indexLine - positionLine <= 1 && indexLine - positionLine >= -1){
+        for(const line of mines) {
+            if (mines.indexOf(line) - positionLine <= 1 && mines.indexOf(line) - positionLine >= -1) {
                 numberMine = numberMine + line.filter((tile, index) => tile && index - positionTile <= 1 && index - positionTile >= -1).length
             }
-        });
+        }
         return numberMine;
     }
     toggleMarked(line, tile) {
@@ -73,7 +73,10 @@ export class TilesManager {
         for(const line of this.#tiles){
             for (const tile of line) {
                 if (this.#tiles.indexOf(line) - lines <= 1 && this.#tiles.indexOf(line) - lines >= -1 && line.indexOf(tile) - tiles <= 1 && line.indexOf(tile) - tiles >= -1) {
-                    tile.openTile()
+                    tile.openTile();
+                    if(tile.state() === tileStates.EMPTY){
+                        this.#openNeighborTiles(this.#tiles.indexOf(line), line.indexOf(tile));
+                    }
                 }
             }
         }
