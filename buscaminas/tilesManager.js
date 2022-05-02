@@ -38,15 +38,9 @@ export class TilesManager {
     }
     numberOfMine(numberMines, positionLine, positionTile){
         let numberMine = 0;
-    numberMines.map((line, indexLine) => {
-            if(positionLine === 0){
-                numberMine = numberMine + line.filter((tile, index) => tile && positionLine +2 !== indexLine && positionTile +2 !== index).length
-            }
-            if(positionLine === 1){
-                numberMine = numberMine + line.filter((tile, index) => tile && positionTile -2 !== index).length
-            }
-            if(positionLine === 2){
-                numberMine = numberMine + line.filter((tile, index) => tile && positionLine -2 !== indexLine && positionTile -2 !== index).length
+        numberMines.map((line, indexLine) => {
+            if(indexLine - positionLine <= 1 && indexLine - positionLine >= -1){
+                numberMine = numberMine + line.filter((tile, index) => tile && index - positionTile <= 1 && index - positionTile >= -1).length
             }
         });
         return numberMine;
@@ -77,8 +71,8 @@ export class TilesManager {
 
     #openNeighborTiles(lines, tiles) {
         for(const line of this.#tiles){
-            for(const tile of line){
-                if(!tile.hasMine() && lines -2 !== this.#tiles.indexOf(line) && tiles -2 !== this.#tiles.indexOf(tile)){
+            for (const tile of line) {
+                if (this.#tiles.indexOf(line) - lines <= 1 && this.#tiles.indexOf(line) - lines >= -1 && line.indexOf(tile) - tiles <= 1 && line.indexOf(tile) - tiles >= -1) {
                     tile.openTile()
                 }
             }

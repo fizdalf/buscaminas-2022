@@ -133,9 +133,9 @@ describe("tileManager", () => {
         tilemanager.openTile(0, 0)
         expect(tilemanager.tileState()).toStrictEqual([[tileStates.TWO, tileStates.CLOSED ,tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
     });
-    it.only('should show the open the tiles around the first tile', function () {
+    it('should show the open the tiles around the first tile', function () {
         const tilemanager = new TilesManager([[false, false, true], [false, false, true], [false, true, true]])
         tilemanager.openTile(0, 0)
-        expect(tilemanager.tileState()).toStrictEqual([[tileStates.EMPTY, tileStates.TWO ,tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED],[tileStates.ONE, tileStates.CLOSED, tileStates.CLOSED]]);
+        expect(tilemanager.tileState()).toStrictEqual([[tileStates.EMPTY, tileStates.TWO ,tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED],[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]);
     });
 });
