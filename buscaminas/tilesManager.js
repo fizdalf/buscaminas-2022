@@ -69,16 +69,25 @@ export class TilesManager {
         return false;
     }
 
-    #openNeighborTiles(lines, tiles) {
-        for(const line of this.#tiles){
-            for (const tile of line) {
-                if (this.#tiles.indexOf(line) - lines <= 1 && this.#tiles.indexOf(line) - lines >= -1 && line.indexOf(tile) - tiles <= 1 && line.indexOf(tile) - tiles >= -1) {
-                    tile.openTile();
-                    if(tile.state() === tileStates.EMPTY){
-                        this.#openNeighborTiles(this.#tiles.indexOf(line), line.indexOf(tile));
-                    }
+    #openNeighborTiles(tileRow, tileColumn) {
+        for(const [lineIndex, line] of this.#tiles.entries()){
+            for (const [tileIndex, tile] of line.entries()) {
+                if (!this.#isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) || this.#tileIsAlreadyOpenOrHasMine(tile)) {
+                    continue;
+                }
+                tile.openTile();
+                if (tile.state() === tileStates.EMPTY) {
+                    this.#openNeighborTiles(lineIndex, tileIndex);
                 }
             }
         }
+    }
+
+    #tileIsAlreadyOpenOrHasMine(tile) {
+        return tile.state() !== tileStates.CLOSED || tile.hasMine();
+    }
+
+    #isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) {
+        return lineIndex - tileRow <= 1 && lineIndex - tileRow >= -1 && tileIndex - tileColumn <= 1 && tileIndex - tileColumn >= -1;
     }
 }
