@@ -38,10 +38,8 @@ export class TilesManager {
     }
     numberOfMine(mines, positionLine, positionTile){
         let numberMine = 0;
-        for(const line of mines) {
-            if (mines.indexOf(line) - positionLine <= 1 && mines.indexOf(line) - positionLine >= -1) {
-                numberMine = numberMine + line.filter((tile, index) => tile && index - positionTile <= 1 && index - positionTile >= -1).length
-            }
+        for(const [lineIndex, line] of mines.entries()) {
+            numberMine = numberMine + line.filter((tile, tileIndex) => tile && TilesManager.#isTileNeighbor(lineIndex, positionLine, tileIndex, positionTile)).length;
         }
         return numberMine;
     }
@@ -72,7 +70,7 @@ export class TilesManager {
     #openNeighborTiles(tileRow, tileColumn) {
         for(const [lineIndex, line] of this.#tiles.entries()){
             for (const [tileIndex, tile] of line.entries()) {
-                if (!this.#isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) || this.#tileIsAlreadyOpenOrHasMine(tile)) {
+                if (!TilesManager.#isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) || TilesManager.#tileIsAlreadyOpenOrHasMine(tile)) {
                     continue;
                 }
                 tile.openTile();
@@ -83,11 +81,11 @@ export class TilesManager {
         }
     }
 
-    #tileIsAlreadyOpenOrHasMine(tile) {
+    static #tileIsAlreadyOpenOrHasMine(tile) {
         return tile.state() !== tileStates.CLOSED || tile.hasMine();
     }
 
-    #isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) {
+    static #isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) {
         return lineIndex - tileRow <= 1 && lineIndex - tileRow >= -1 && tileIndex - tileColumn <= 1 && tileIndex - tileColumn >= -1;
     }
 }
