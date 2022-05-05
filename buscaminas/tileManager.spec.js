@@ -1,47 +1,62 @@
-import {TilesManager} from "./tilesManager.js";
+wdimport {TilesManager} from "./tilesManager.js";
 import {tileStates} from "./tile.js";
 
 describe("tileManager", () => {
     it.each([
-        [[[true, false], [false, false]], 0, 0, [[tileStates.MINE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[false, true], [true, true]], 0, 0, [[tileStates.THREE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[false, true], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.MINE], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, false], [false, true]], 0, 0, [[tileStates.MINE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[true, false], [false, true], 0, 0, [[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[false, true], [true, true]], 0, 0, [[tileStates.THREE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, false], [true, false]], 0, 1, [[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true], [true, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.THREE]]],
-        [[[true, true, false], [true, false, false], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true, false], [true, false, true], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FIVE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true, true], [true, false, true], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.SIX, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true, true], [true, false, true], [true, true, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.SEVEN, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true, true], [true, false, true], [true, true, true]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.EIGHT, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[true, true, false], [true, false, false], [true, false, false]], 2, 2, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.ONE], [tileStates.CLOSED, tileStates.TWO, tileStates.EMPTY]]],
-        [[[false, false, true], [true, true, true], [false, true, false]], 0, 0, [[tileStates.TWO, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[[false, false, true], [false, false, true], [false, true, true]], 0, 0, [[tileStates.EMPTY, tileStates.TWO, tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]]],
-        [[
-            [false, false, false, false, false, false],
-            [true, false, true, false, false, false],
-            [false, true, false, false, true, false],
-            [true, false, true, false, true, false],
-            [false, true, false, false, false, false],
-            [false, false, true, false, false, true]
-        ], 0, 5, [
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.ONE, tileStates.EMPTY, tileStates.EMPTY],
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.TWO, tileStates.ONE, tileStates.ONE],
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
-            [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]
-        ]]
-    ])("should show the event when open a tile", (mines, row, column, state) => {
+        [ [[false, true], [true, true]], 0, 0, [[tileStates.THREE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, false], [false, true]], 0, 1, [[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[false, true], [true, true]], 0, 0, [[tileStates.THREE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.ONE], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, false], [true, false]], 0, 1, [[tileStates.CLOSED, tileStates.TWO], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, true], [true, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.THREE]] ],
+        [ [[true, true, false], [true, false, false], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, true, false], [true, false, true], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FIVE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, true, true], [true, false, true], [true, false, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.SIX, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, true, true], [true, false, true], [true, true, false]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.SEVEN, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[true, true, true], [true, false, true], [true, true, true]], 1, 1, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.EIGHT, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+        [ [[false, false, true], [true, true, true], [false, true, false]], 0, 0, [[tileStates.TWO, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+    ])("should show the %d number of mines when there is %d mines around the tile", (mines, row, column, state) => {
         const tileManager = new TilesManager(mines);
         tileManager.openTile(row, column)
         expect(tileManager.tileState()).toStrictEqual(state);
     });
+
+    it.each([
+        [[[true, false], [false, false]], 0, 0, [[tileStates.MINE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]],
+        [ [[false, true], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.MINE], [tileStates.CLOSED, tileStates.CLOSED]] ],
+        [[[true, false], [false, true]], 0, 0, [[tileStates.MINE, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]]]
+    ])("should show a tile with mine when open a tile", (mines, row, column, state) => {
+        const tileManager = new TilesManager(mines);
+        tileManager.openTile(row, column)
+        expect(tileManager.tileState()).toStrictEqual(state);
+    });
+
+    it.each([
+            [ [[true, true, false], [true, false, false], [true, false, false]], 2, 2, [[tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.FOUR, tileStates.ONE], [tileStates.CLOSED, tileStates.TWO, tileStates.EMPTY]] ],
+            [ [[false, false, true], [false, false, true], [false, true, true]], 0, 0, [[tileStates.EMPTY, tileStates.TWO, tileStates.CLOSED], [tileStates.ONE, tileStates.FOUR, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]] ],
+         [ [
+        [false, false, false, false, false, false],
+        [true, false, true, false, false, false],
+        [false, true, false, false, true, false],
+        [true, false, true, false, true, false],
+        [false, true, false, false, false, false],
+        [false, false, true, false, false, true]
+    ], 0, 5, [
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.ONE, tileStates.EMPTY, tileStates.EMPTY],
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.TWO, tileStates.ONE, tileStates.ONE],
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED],
+        [tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED, tileStates.CLOSED]
+    ] ]
+    ])("should open various tiles when the tile are empty", (mines, row, column, state) => {
+        const tileManager = new TilesManager(mines);
+        tileManager.openTile(row, column)
+        expect(tileManager.tileState()).toStrictEqual(state);
+    });
+
     it.each([
         [ [[true, false], [false, false]], 0, 0, [[tileStates.MARKED, tileStates.CLOSED], [tileStates.CLOSED, tileStates.CLOSED]] ],
         [ [[true, false], [false, false]], 0, 1, [[tileStates.CLOSED, tileStates.MARKED], [tileStates.CLOSED, tileStates.CLOSED]] ]

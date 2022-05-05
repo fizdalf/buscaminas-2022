@@ -9,10 +9,10 @@ export const gameStates = {
 export class Buscaminas {
     #gameState = gameStates.PLAYING;
     /** @member {TilesManager} */
-    #tilesManager;
+    tilesManager;
 
     constructor(mines) {
-        this.#tilesManager = new TilesManager(mines);
+        this.tilesManager = new TilesManager(mines);
     }
 
     updateGameStatus(wasMine) {
@@ -20,14 +20,14 @@ export class Buscaminas {
             this.#gameState = gameStates.LOST;
             return;
         }
-        if (this.#tilesManager.areThereClosedTilesWithoutMines()) {
+        if (this.tilesManager.areThereClosedTilesWithoutMines()) {
             return;
         }
         this.#gameState = gameStates.WON;
     }
 
     openTile(line, mine) {
-        const wasMine = this.#tilesManager.openTile(line, mine);
+        const wasMine = this.tilesManager.openTile(line, mine);
         this.updateGameStatus(wasMine);
     }
 
@@ -35,7 +35,7 @@ export class Buscaminas {
         if (this.#gameState === gameStates.LOST) {
             return;
         }
-        this.#tilesManager.toggleMarked(line, tile);
+        this.tilesManager.toggleMarked(line, tile);
     }
 
     gameState() {

@@ -24,11 +24,6 @@ describe('Buscaminas', () => {
         buscaminas.openTile(row, column)
         expect(buscaminas.gameState()).toBe(state)
     });
-   /* it.each([
-
-    ])("should consider the game is lost when open a tile with mine or is won when open the all tile empty", () =>{
-
-    });*/
 
     it('should consider that the game is won when all tiles are open', () => {
         const buscaminas = new Buscaminas(

@@ -23,16 +23,16 @@ export class MinesChecker {
 
 
 export class TilesManager {
-    #tiles;
+    tiles;
     #minesChecker = new MinesChecker();
     constructor(mines) {
         this.#generateTiles(mines);
     }
     areThereClosedTilesWithoutMines() {
-        return this.#tiles.some(line => line.some(tile => tile.state() === tileStates.CLOSED && !tile.hasMine()))
+        return this.tiles.some(line => line.some(tile => tile.state() === tileStates.CLOSED && !tile.hasMine()))
     }
     tileState() {
-        return this.#tiles.map((line) => {
+        return this.tiles.map((line) => {
             return line.map((tile) => tile.state())
         })
     }
@@ -44,12 +44,12 @@ export class TilesManager {
         return numberMine;
     }
     toggleMarked(line, tile) {
-        return this.#tiles[line][tile].toggleMarked();
+        return this.tiles[line][tile].toggleMarked();
     }
 
     #generateTiles(mines) {
         this.#minesChecker.validMines(mines)
-        this.#tiles = mines.map((line, indexLine) => {
+        this.tiles = mines.map((line, indexLine) => {
             return line.map((tile, indexTile) => {
                 return new Tile(tile, this.numberOfMine(mines, indexLine, indexTile));
             });
@@ -57,18 +57,18 @@ export class TilesManager {
     }
 
     openTile(line, tile) {
-        const wasMine = this.#tiles[line][tile].openTile();
+        const wasMine = this.tiles[line][tile].openTile();
         if (wasMine) {
             return true;
         }
-        if(this.#tiles[line][tile].state() === tileStates.EMPTY){
+        if(this.tiles[line][tile].state() === tileStates.EMPTY){
             this.#openNeighborTiles(line, tile);
         }
         return false;
     }
 
     #openNeighborTiles(tileRow, tileColumn) {
-        for(const [lineIndex, line] of this.#tiles.entries()){
+        for(const [lineIndex, line] of this.tiles.entries()){
             for (const [tileIndex, tile] of line.entries()) {
                 if (!TilesManager.#isTileNeighbor(lineIndex, tileRow, tileIndex, tileColumn) || TilesManager.#tileIsAlreadyOpenOrHasMine(tile)) {
                     continue;
