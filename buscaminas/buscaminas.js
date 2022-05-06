@@ -12,6 +12,7 @@ export class Buscaminas {
     tilesManager;
 
     constructor(mines) {
+        console.log(mines)
         this.tilesManager = new TilesManager(mines);
     }
 
