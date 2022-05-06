@@ -3,37 +3,31 @@ import {tileStates} from "./tile.js";
 window.onload = function () {
 let buscaminas
     function startGame() {
-        buscaminas = new Buscaminas([
-            [mines()],
-            [mines()],
-            [mines()],
-            [mines()],
-            [mines()],
-            [mines()],
-            [mines()],
-            [mines()]
-        ]);
-    }
-    function mines() {
-        let mines = [];
+    let mines = []
         for (let i = 0; i < 8; i++) {
-            mines.push([true, false][Math.round(Math.random())])
-        }return mines;
+            mines.push(mine())
+        }
+        buscaminas = new Buscaminas(mines);
+    }
+    function mine() {
+        let mine = [];
+        for (let i = 0; i < 8; i++) {
+            mine.push([true, false][Math.round(Math.random())])
+        }return mine;
     }
     startGame()
     let tilesHTML = document.getElementsByClassName("tiles");
     for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
         tile.addEventListener("auxclick", function () {
             buscaminas.markAndUnmarkTile(Math.floor(tileIndex/8), tileIndex%8);
-            openAndMarkedTiles();
+            openAndMarkTiles();
         });
     }
         for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
             tile.addEventListener("click", function () {
-                console.log(Math.floor(tileIndex/8), tileIndex%8)
                 buscaminas.openTile(Math.floor(tileIndex/8), tileIndex%8);
-                openAndMarkedTiles();
-                winOrLost();
+                openAndMarkTiles();
+                winOrLost()
             });
         }
         function winOrLost() {
@@ -44,7 +38,7 @@ let buscaminas
                     tile.className = "tiles";
                     tile.style.backgroundColor = "cyan"
                 }
-                alert("you lost")
+               alert("you lost")
             }
             else if(buscaminas.gameState() === gameStates.WON){
                 startGame()
@@ -56,7 +50,7 @@ let buscaminas
                 alert("you win")
             }
         }
-        function openAndMarkedTiles() {
+        function openAndMarkTiles() {
             for(const tileIndex in tilesHTML){
                 let tile = buscaminas.tilesManager.tiles[Math.floor(tileIndex/8)][tileIndex%8].state()
                 if(tile === tileStates.MINE){
@@ -65,15 +59,12 @@ let buscaminas
                 }
                 else if(tile === tileStates.MARKED){
                     tilesHTML[tileIndex].className += " Ma";
-                    continue;
                 }
                 else if(tile === tileStates.CLOSED){
                     tilesHTML[tileIndex].className = "tiles";
-                    continue;
                 }
                 else if(tile === tileStates.EMPTY){
                     tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
-                    continue;
                 }
                 else if(tile !== tileStates.CLOSED){
                     tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
