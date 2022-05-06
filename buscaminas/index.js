@@ -3,16 +3,21 @@ import {tileStates} from "./tile.js";
 window.onload = function () {
 let buscaminas
     function startGame() {
-    let mines = []
+        let mines = []
         for (let i = 0; i < 8; i++) {
             mines.push(mine())
         }
         buscaminas = new Buscaminas(mines);
     }
     function mine() {
+        let numberMine = 0
         let mine = [];
         for (let i = 0; i < 8; i++) {
-            mine.push([true, false][Math.round(Math.random())])
+            if([true, false][Math.round(Math.random())] && numberMine < 2){
+                mine.push(true)
+                numberMine++
+                continue;
+            }mine.push(false)
         }return mine;
     }
     startGame()
