@@ -21,6 +21,7 @@ let buscaminas
         }return mine;
     }
     startGame()
+    const background = ["url('https://minesweeper.online/img/skins/hd/type0.svg')", "url('https://minesweeper.online/img/skins/hd/type1.svg')", "url('https://minesweeper.online/img/skins/hd/type2.svg')", "url('https://minesweeper.online/img/skins/hd/type3.svg')", "url('https://minesweeper.online/img/skins/hd/type3.svg')", "url('https://minesweeper.online/img/skins/hd/type4.svg')", "url('https://minesweeper.online/img/skins/hd/type5.svg')", "url('https://minesweeper.online/img/skins/hd/type6.svg')", "url('https://minesweeper.online/img/skins/hd/type7.svg')", "url('https://minesweeper.online/img/skins/hd/type8.svg')"]
     let tilesHTML = document.getElementsByClassName("tiles");
     for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
         tile.addEventListener("auxclick", function () {
@@ -41,7 +42,7 @@ let buscaminas
                 for (const tile of tilesHTML) {
                     tile.innerHTML = ""
                     tile.className = "tiles";
-                    tile.style.backgroundColor = "cyan"
+                    tile.style.backgroundImage ="url('https://minesweeper.online/img/skins/hd/closed.svg')"
                 }
                alert("you lost")
             }
@@ -50,7 +51,7 @@ let buscaminas
                 for (const tile of tilesHTML) {
                     tile.innerHTML = ""
                     tile.className = "tiles";
-                    tile.style.backgroundColor = "cyan"
+                    tile.style.backgroundImage ="url('https://minesweeper.online/img/skins/hd/closed.svg')"
                 }
                 alert("you win")
             }
@@ -59,21 +60,17 @@ let buscaminas
             for(const tileIndex in tilesHTML){
                 let tile = buscaminas.tilesManager.tiles[Math.floor(tileIndex/8)][tileIndex%8].state()
                 if(tile === tileStates.MINE){
-                    tilesHTML[tileIndex].className += " Mi";
-                    winOrLost()
+                    tilesHTML[tileIndex].style.backgroundImage ="url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdXYwnM_0_H_xvrfN1h5LeeVHn4ApVKSVJeokB06aJ3pMunfKUgmuoNWwP1MeO_OoAiw&usqp=CAU')";
+                    winOrLost();
                 }
                 else if(tile === tileStates.MARKED){
-                    tilesHTML[tileIndex].className += " Ma";
+                    tilesHTML[tileIndex].style.backgroundImage ="url('https://img2.freepng.es/20180325/kqe/kisspng-minesweeper-computer-icons-bing-maps-video-game-mines-5ab7a191c79531.0286407715219838898175.jpg')";
                 }
                 else if(tile === tileStates.CLOSED){
                     tilesHTML[tileIndex].className = "tiles";
                 }
-                else if(tile === tileStates.EMPTY){
-                    tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
-                }
                 else if(tile !== tileStates.CLOSED){
-                    tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
-                    tilesHTML[tileIndex].innerHTML = "<h1>" + (tile -1) + "</h1>"
+                    tilesHTML[tileIndex].style.backgroundImage = background[tile -1]
                 }
             }
         }
