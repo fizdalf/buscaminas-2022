@@ -1,58 +1,85 @@
 import {Buscaminas, gameStates} from "./buscaminas.js";
-import {TilesManager} from "./tilesManager.js";
-import {Tile, tileStates} from "./tile.js";
+import {tileStates} from "./tile.js";
 window.onload = function () {
 let buscaminas
     function startGame() {
         buscaminas = new Buscaminas([
-            [true, false, false, true, false, true, false, false],
-            [false, false, false, false, false, false, false, false],
-            [false, true, false, false, false, true, false, false],
-            [false, false, false, false, false, false, false, false],
-            [false, true, false, false, false, false, false, false],
-            [false, false, false, false, true, false, false, true],
-            [false, false, false, false, false, true, false, false],
-            [true, false, false, false, false, false, false, false]
+            [mines()],
+            [mines()],
+            [mines()],
+            [mines()],
+            [mines()],
+            [mines()],
+            [mines()],
+            [mines()]
         ]);
     }
+    function mines() {
+        let mines = [];
+        for (let i = 0; i < 8; i++) {
+            mines.push([true, false][Math.round(Math.random())])
+        }return mines;
+    }
     startGame()
-    let tiles = document.getElementsByClassName("tiles");
-    for (const [tileIndex, tile] of Object.entries(tiles)) {
+    let tilesHTML = document.getElementsByClassName("tiles");
+    for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
         tile.addEventListener("auxclick", function () {
             buscaminas.markAndUnmarkTile(Math.floor(tileIndex/8), tileIndex%8);
-            tileState( Math.floor(tileIndex/8) ,tileIndex%8, tileIndex);
+            openAndMarkedTiles();
         });
     }
-        for (const [tileIndex, tile] of Object.entries(tiles)) {
+        for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
             tile.addEventListener("click", function () {
+                console.log(Math.floor(tileIndex/8), tileIndex%8)
                 buscaminas.openTile(Math.floor(tileIndex/8), tileIndex%8);
-                tileState( Math.floor(tileIndex/8) ,tileIndex%8, tileIndex);
-                winOrLost()
+                openAndMarkedTiles();
+                winOrLost();
             });
         }
         function winOrLost() {
             if(buscaminas.gameState() === gameStates.LOST) {
                 startGame()
-                for (const tile of tiles) {
+                for (const tile of tilesHTML) {
                     tile.innerHTML = ""
-                    tile.style.backgroundColor = "lightskyblue"
+                    tile.className = "tiles";
+                    tile.style.backgroundColor = "cyan"
                 }
                 alert("you lost")
             }
+            else if(buscaminas.gameState() === gameStates.WON){
+                startGame()
+                for (const tile of tilesHTML) {
+                    tile.innerHTML = ""
+                    tile.className = "tiles";
+                    tile.style.backgroundColor = "cyan"
+                }
+                alert("you win")
+            }
         }
-        function tileState(line, tile, tileIndex) {
-            const tileState = buscaminas.tilesManager.tiles[line][tile].state() - 1
-            if(tileState +1 === tileStates.MINE){
-                tiles[tileIndex].style.backgroundColor = "red"
+        function openAndMarkedTiles() {
+            for(const tileIndex in tilesHTML){
+                let tile = buscaminas.tilesManager.tiles[Math.floor(tileIndex/8)][tileIndex%8].state()
+                if(tile === tileStates.MINE){
+                    tilesHTML[tileIndex].className += " Mi";
+                    winOrLost()
+                }
+                else if(tile === tileStates.MARKED){
+                    tilesHTML[tileIndex].className += " Ma";
+                    continue;
+                }
+                else if(tile === tileStates.CLOSED){
+                    tilesHTML[tileIndex].className = "tiles";
+                    continue;
+                }
+                else if(tile === tileStates.EMPTY){
+                    tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
+                    continue;
+                }
+                else if(tile !== tileStates.CLOSED){
+                    tilesHTML[tileIndex].style.backgroundColor = "lightskyblue"
+                    tilesHTML[tileIndex].innerHTML = "<h1>" + (tile -1) + "</h1>"
+                }
             }
-            if(tileState +1 === tileStates.MARKED){
-                tiles[tileIndex].style.backgroundColor = "black"
-                return;
-            }
-            if(tileState +1 === tileStates.CLOSED){
-                tiles[tileIndex].style.backgroundColor = "lightskyblue"
-                return;
-            }tiles[tileIndex].innerHTML = "<h1>" + tileState + "</h1>"
         }
 
 }
