@@ -1,4 +1,4 @@
-wdimport {TilesManager} from "./tilesManager.js";
+import {TilesManager} from "./tilesManager.js";
 import {tileStates} from "./tile.js";
 
 describe("tileManager", () => {
