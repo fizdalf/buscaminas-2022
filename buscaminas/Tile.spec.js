@@ -16,7 +16,7 @@ describe("Tile", () => {
         tile.openTile()
         expect(tile.state()).toBe(tileStates.MINE)
     });
-    it("should unmarked tile when try marked for second time", () =>{
+    it("should unmark tile when try to mark it for second time", () =>{
         const tile = new Tile(true)
         tile.toggleMarked()
         tile.toggleMarked()

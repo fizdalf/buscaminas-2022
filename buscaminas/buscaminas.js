@@ -29,6 +29,7 @@ export class Buscaminas {
     openTile(line, mine) {
         const wasMine = this.tilesManager.openTile(line, mine);
         this.updateGameStatus(wasMine);
+        return wasMine;
     }
 
     markAndUnmarkTile(line, tile) {
