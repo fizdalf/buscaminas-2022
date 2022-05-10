@@ -10,7 +10,7 @@ class TileCoordinates{
     }
     constructor(positionMine, width) {
         this._x = Math.floor(positionMine / width);
-        this._y = positionMine % BOARD_NUMBER_OF_ROWS
+        this._y = positionMine % width;
     }
 
 }
