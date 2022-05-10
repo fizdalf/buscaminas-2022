@@ -33,6 +33,9 @@ export class Tile {
             this._tileState = tileStates.CLOSED;
             return this._hasMine;
         }
+        if(this._tileState !== tileStates.CLOSED){
+            return;
+        }
         this._tileState = tileStates.MARKED;
         return this._hasMine;
     }
