@@ -1,13 +1,15 @@
 import {Buscaminas, gameStates} from "./buscaminas.js";
 import {tileStates} from "./tile.js";
 
-class TileCoordinates{
+class TileCoordinates {
     get y() {
         return this._y;
     }
+
     get x() {
         return this._x;
     }
+
     constructor(positionMine, width) {
         this._x = Math.floor(positionMine / width);
         this._y = positionMine % width;
@@ -34,6 +36,7 @@ const backgrounds = {
 window.onload = function () {
     let buscaminas;
     let tilesHTML = document.getElementsByClassName("tiles");
+
     function startGame() {
 
         let mines = []
@@ -41,7 +44,8 @@ window.onload = function () {
             let minesLine = []
             for (let j = 0; j < BOARD_NUMBER_OF_ROWS; j++) {
                 minesLine.push(false)
-            }mines.push(minesLine)
+            }
+            mines.push(minesLine)
         }
 
         for (let i = 0; i < NUMBER_OF_MINES; i++) {
@@ -58,6 +62,7 @@ window.onload = function () {
     function mine() {
         return Math.floor(Math.random() * 64);
     }
+
     startGame()
     for (const [tileIndex, tile] of Object.entries(tilesHTML)) {
         const coordinates = new TileCoordinates(tileIndex, BOARD_NUMBER_OF_ROWS);
@@ -71,7 +76,9 @@ window.onload = function () {
         tile.addEventListener("click", function () {
             buscaminas.openTile(coordinates.x, coordinates.y);
             repaintBoard();
-            window.setTimeout(function(){winOrLost()}, 500);
+            window.setTimeout(function () {
+                winOrLost()
+            }, 500);
         });
     }
 
