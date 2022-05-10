@@ -43,4 +43,10 @@ describe("Tile", () => {
         tile.toggleMarked()
         expect(tile.state()).toBe(tileStates.EMPTY)
     });
+    it('should not open a marked tile', function () {
+        const tile = new Tile(false, 0)
+        tile.toggleMarked()
+        tile.openTile()
+        expect(tile.state()).toBe(tileStates.MARKED)
+    });
 });
