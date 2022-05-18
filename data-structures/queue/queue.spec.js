@@ -13,15 +13,6 @@ class Queue {
 
 }
 
-function hola(param1, param2){
-
-}
-
-
-hola(1);
-hola(1,2);
-hola(2);
-
 describe('Queue', () => {
     it("should return one when one is the first item", () => {
         const queue = new Queue();
