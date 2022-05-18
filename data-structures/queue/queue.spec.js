@@ -2,13 +2,13 @@
 // FIFO (First In First Out)
 
 class Queue {
-
+    queue;
     push(item1) {
-
+        this.queue = item1
     }
 
     get() {
-        return 1;
+        return this.queue;
     }
 
 }
@@ -23,5 +23,5 @@ describe('Queue', () => {
         const queue = new Queue();
         queue.push(2);
         expect(queue.get()).toBe(2)
-    })
-})
+    });
+});
