@@ -16,6 +16,6 @@ describe("Nodes", () => {
         const node = new Node(17)
         node.next = new Node(37)
         expect(node.next.data).toBe(37)
-    })
+    });
 })
 
