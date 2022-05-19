@@ -1,26 +1,28 @@
 class Node{
     data;
     next;
-    previus;
+    previous;
     constructor(data, previus = undefined) {
         this.data = data;
-        this.previus = previus;
+        this.previous = previus;
     }
 }
 
 
 class Queue {
     head;
+    tail;
     enqueue(data) {
         if(this.head === undefined){
             this.head = new Node(data);
             return;
         }
-        let lastNode = this.head;
-        while (lastNode.next !== undefined){
-            lastNode = lastNode.next;
+        if(this.tail === undefined){
+            this.tail = new Node(data, this.head);
+            this.head.next = this.tail;
+            return;
         }
-        lastNode.next = new Node(data, lastNode)
+        this.tail = new Node(data, this.tail)
     }
 
     dequeue() {
