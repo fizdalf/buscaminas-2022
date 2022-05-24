@@ -2,9 +2,9 @@ class Node{
     data;
     next;
     previous;
-    constructor(data, previus = undefined) {
+    constructor(data, previous = undefined) {
         this.data = data;
-        this.previous = previus;
+        this.previous = previous;
     }
 }
 
@@ -23,6 +23,7 @@ class Queue {
             return;
         }
         this.tail = new Node(data, this.tail)
+        this.tail.previous.next = this.tail
     }
 
     dequeue() {
