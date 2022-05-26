@@ -1,47 +1,7 @@
-class Node{
-    data;
-    left;
-    right;
-    constructor(data) {
-        this.data = data
-    }
-}
+import {Node} from "./tree.js"
+import {Tree} from "./tree.js"
 
-class Tree{
 
-    preOrder(root){
-        let nodes = [root.data];
-        if(root.left !== undefined){
-            nodes = nodes.concat(this.preOrder(root.left));
-        }
-        if(root.right !== undefined){
-            nodes = nodes.concat(this.preOrder(root.right));
-        }
-        return nodes;
-    }
-    inOrder(root){
-        let nodes = [];
-        if(root.left !== undefined){
-            nodes = nodes.concat(this.inOrder(root.left));
-        }
-        nodes = nodes.concat(root.left.right);
-        if(root.right !== undefined){
-            nodes = nodes.concat(this.inOrder(root.right));
-        }
-        return nodes;
-    }
-    postOrder(root){
-        let nodes = [];
-        if(root.left !== undefined){
-            nodes = nodes.concat(this.postOrder(root.left));
-        }
-        if(root.right !== undefined){
-            nodes = nodes.concat(this.postOrder(root.right));
-        }
-        nodes = nodes.concat(root.data);
-        return nodes;
-    }
-}
 
 describe("pre order", () =>{
     it('should return data of the root', function () {
@@ -208,3 +168,63 @@ describe("post order", () =>{
         expect(tree.postOrder(root)).toStrictEqual([6,7,5,9,10,8,4]);
     });
 })
+/*describe("Breadth search",  () => {
+    it('shoul travel the levels of tree', function (){
+        const root = new Node(1);
+        const tree = new Tree();
+        expect(tree.breadthSearch(root)).toStrictEqual([1])
+    });
+    it('should travel the two levels of tree', function (){
+        const root = new Node(1);
+        root.left = new Node(2)
+        root.right = new Node(3)
+        const tree = new Tree();
+        expect(tree.breadthSearch(root)).toStrictEqual([1,2,3])
+    });
+    it('should travel the three levels of tree', function (){
+        const root = new Node(1);
+        root.left = new Node(2);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right = new Node(3)
+        root.right.left = new Node(6)
+        root.right.right = new Node(7);
+        const tree = new Tree();
+        expect(tree.breadthSearch(root)).toStrictEqual([1,2,3,4,5,6,7])
+    });
+});*/
+
+describe("types of trees" , () =>{
+   it("a tree only with root", () => {
+       const root = new Node(1);
+       const tree = new Tree();
+       expect(tree.isFullTree(root)).toBe(true);
+   });
+    it("a tree with a node in the left", () => {
+        const root = new Node(1);
+        root.left = new Node(123)
+        const tree = new Tree();
+        expect(tree.isFullTree(root)).toBe(false);
+    });
+    it("a tree with a node in the right", () => {
+        const root = new Node(1);
+        root.right = new Node(123)
+        const tree = new Tree();
+        expect(tree.isFullTree(root)).toBe(false);
+    });
+    it("a tree with two child nodes", () => {
+        const root = new Node(1);
+        root.left = new Node(123);
+        root.right = new Node(123);
+        const tree = new Tree();
+        expect(tree.isFullTree(root)).toBe(true);
+    });
+    it("a tree with two child nodes and subtree", () => {
+        const root = new Node(1);
+        root.left = new Node(123);
+        root.right = new Node(847584);
+        root.left.left = new Node(93894);
+        const tree = new Tree();
+        expect(tree.isFullTree(root)).toBe(false);
+    });
+});
