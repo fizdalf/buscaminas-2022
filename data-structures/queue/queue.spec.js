@@ -1,13 +1,5 @@
-class Queue {
-    queue = [];
-    enqueue(item1) {
-        this.queue.push(item1);
-    }
+import {Queue} from "./queue.js";
 
-    dequeue() {
-        return this.queue.shift();
-    }
-}
 describe('Queue', () => {
     it.each([
         [1]

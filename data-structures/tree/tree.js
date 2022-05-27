@@ -1,13 +1,19 @@
+import {Queue} from "../queue/queue.js"
 export class Node{
     data;
     left;
     right;
+    deep = 0
     constructor(data) {
         this.data = data
     }
 }
 
 export class Tree{
+    count = 0
+    hasDeep(root, node){
+
+    }
     preOrder(root){
         let nodes = [root.data];
         if(root.left !== undefined){
@@ -40,34 +46,39 @@ export class Tree{
         nodes = nodes.concat(root.data);
         return nodes;
     }
-    nodes = [];
-    explorer(node) {
-        this.nodes = this.nodes.concat(node.data);
-        return node.left !== undefined || node.right !== undefined;
-    }
     breadthSearch(root){
-        let toFindOut = this.explorer(root);
-        let nodeLeft = root.left;
-        let nodeRight = root.right;
-        if (toFindOut){
-            if (nodeLeft !==undefined){
-                this.breadthSearch(nodeLeft)
+        const toExplorer = new Queue();
+        let nodes = [];
+        toExplorer.enqueue(root)
+
+        while(true){
+            let actualNode = toExplorer.dequeue()
+            if(actualNode === undefined){
+                break;
             }
-            if (nodeRight !==undefined){
-                this.breadthSearch(nodeRight)
+            if (actualNode.left !== undefined){
+                toExplorer.enqueue(actualNode.left)
             }
+            if (actualNode.right !== undefined){
+                toExplorer.enqueue(actualNode.right)
+            }
+            nodes = nodes.concat(actualNode.data)
         }
-        return this.nodes;
+        return nodes
     }
     isFullTree(root){
-        let nodes
-        nodes = root.left !== undefined && root.right !== undefined || root.left === undefined && root.right === undefined
-        if(nodes && root.left !== undefined) {
-            nodes = this.isFullTree(root.left)
+        const doesNotHaveChildren = root.left === undefined && root.right === undefined;
+        if (doesNotHaveChildren) {
+            return true;
         }
-        if(nodes && root.right !== undefined){
-            nodes = this.isFullTree(root.right)
+        const doesNotHaveBoth = root.left === undefined || root.right === undefined;
+        if (doesNotHaveBoth) {
+            return false;
         }
-        return nodes;
+        return this.isFullTree(root.left) && this.isFullTree(root.right);
+    }
+    isPerfectTree(root) {
+        const nodes = this.preOrder(root);
+        return nodes.length === 1 || Math.sqrt(nodes.length +1) === Math.floor(Math.sqrt(nodes.length +1))
     }
 }

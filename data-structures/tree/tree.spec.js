@@ -167,9 +167,40 @@ describe("post order", () =>{
         const tree = new Tree();
         expect(tree.postOrder(root)).toStrictEqual([6,7,5,9,10,8,4]);
     });
-})
-/*describe("Breadth search",  () => {
-    it('shoul travel the levels of tree', function (){
+});
+
+describe("has deep", ()=> {
+    it("should return 0 when only have root", () => {
+        const root = new Node(234);
+        const tree = new Tree();
+        expect(tree.hasDeep(root, root)).toBe(0);
+    });
+    it("should return 1 when the root has one node at the left", () => {
+        const root = new Node(234);
+        root.left = new Node(1)
+        const tree = new Tree();
+        expect(tree.hasDeep(root, root.left)).toBe(1);
+    });
+    it("should return 1 when the root has one node at the right", () => {
+        const root = new Node(234);
+        root.right = new Node(1);
+        const tree = new Tree();
+        expect(tree.hasDeep(root, root.right)).toBe(1);
+    });
+    it("should return 2 when the node have this deep", () => {
+        const root = new Node(234);
+        root.left = new Node(183);
+        root.right = new Node(1);
+        root.left.left = new Node(3984);
+        const tree = new Tree();
+        expect(tree.hasDeep(root, root.left.left)).toBe(2);
+    });
+});
+
+
+
+describe("Breadth search",  () => {
+    it('should travel the levels of tree', function (){
         const root = new Node(1);
         const tree = new Tree();
         expect(tree.breadthSearch(root)).toStrictEqual([1])
@@ -181,50 +212,84 @@ describe("post order", () =>{
         const tree = new Tree();
         expect(tree.breadthSearch(root)).toStrictEqual([1,2,3])
     });
-    it('should travel the three levels of tree', function (){
+    it('should return the nodes data with breadth search', function (){
         const root = new Node(1);
         root.left = new Node(2);
+        root.right = new Node(3);
         root.left.left = new Node(4);
         root.left.right = new Node(5);
-        root.right = new Node(3)
-        root.right.left = new Node(6)
-        root.right.right = new Node(7);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7)
         const tree = new Tree();
         expect(tree.breadthSearch(root)).toStrictEqual([1,2,3,4,5,6,7])
     });
-});*/
 
-describe("types of trees" , () =>{
-   it("a tree only with root", () => {
+});
+
+
+
+describe("is full tree" , () =>{
+   it("should return true when the tree only have root", () => {
        const root = new Node(1);
        const tree = new Tree();
        expect(tree.isFullTree(root)).toBe(true);
    });
-    it("a tree with a node in the left", () => {
+    it("should return false when the tree have a node in the left", () => {
         const root = new Node(1);
         root.left = new Node(123)
         const tree = new Tree();
         expect(tree.isFullTree(root)).toBe(false);
     });
-    it("a tree with a node in the right", () => {
+    it("should return false when the tree have a node in the right", () => {
         const root = new Node(1);
         root.right = new Node(123)
         const tree = new Tree();
         expect(tree.isFullTree(root)).toBe(false);
     });
-    it("a tree with two child nodes", () => {
+    it("should return true when the tree have two child nodes", () => {
         const root = new Node(1);
         root.left = new Node(123);
         root.right = new Node(123);
         const tree = new Tree();
         expect(tree.isFullTree(root)).toBe(true);
     });
-    it("a tree with two child nodes and subtree", () => {
+    it("should return false when the tree have two child nodes and one sub node", () => {
         const root = new Node(1);
         root.left = new Node(123);
         root.right = new Node(847584);
         root.left.left = new Node(93894);
         const tree = new Tree();
         expect(tree.isFullTree(root)).toBe(false);
+    });
+});
+describe("is perfect tree", () => {
+   it("this tree should be perfect", () => {
+       const root = new Node(1);
+       const tree = new Tree();
+       expect(tree.isPerfectTree(root)).toBe(true);
+   });
+   it("this tree should be not perfect", () => {
+       const root = new Node(1);
+       root.left = new Node(2)
+       const tree = new Tree();
+       expect(tree.isPerfectTree(root)).toBe(false);
+   });
+    it("should return true when the tree have two child nodes", () => {
+        const root = new Node(1);
+        root.left = new Node(2);
+        root.left.left = new Node(45)
+        root.right = new Node(3);
+        root.right.right = new Node(78)
+        const tree = new Tree();
+        expect(tree.isPerfectTree(root)).toBe(false);
+    });
+    it("this tree is full but is not perfect", () => {
+        const root = new Node(1);
+        root.left = new Node(2);
+        root.left.right = new  Node(5);
+        root.left.left = new Node(4);
+        root.right = new Node(3);
+        const tree = new Tree();
+        expect(tree.isPerfectTree(root)).toBe(false);
     });
 });
