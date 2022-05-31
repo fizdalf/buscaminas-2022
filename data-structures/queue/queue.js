@@ -8,4 +8,7 @@ export class Queue {
     dequeue() {
         return this.queue.shift();
     }
+    size(){
+        return this.queue.length;
+    }
 }

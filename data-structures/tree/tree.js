@@ -3,16 +3,46 @@ export class Node{
     data;
     left;
     right;
-    deep = 0
     constructor(data) {
         this.data = data
     }
 }
 
 export class Tree{
+    root;
+    constructor(root) {
+        this.root = root
+    }
     count = 0
     hasDeep(root, node){
-
+        let aux;
+        if(root !== node){
+            this.count++;
+        }if (root.left !== undefined){
+            aux = this.count
+            this.hasDeep(root.left, node);
+        }
+        if (root.right !== undefined){
+            if (aux !== undefined){
+                this.count = aux;
+            }this.hasDeep(root.right, node);
+        }return this.count;
+    }
+    hasHeight(node){
+        if (node.left === undefined && node.right === undefined){
+            return 0;
+        }
+        let heightLeft = -1;
+        let heightRight = -1;
+        if (node.left !== undefined){
+            heightLeft = this.hasHeight(node.left)
+        }
+        if (node.right !== undefined){
+            heightRight = this.hasHeight(node.right)
+        }
+        if(heightLeft > heightRight){
+            return heightLeft +1
+        }return heightRight +1
     }
     preOrder(root){
         let nodes = [root.data];
@@ -50,10 +80,9 @@ export class Tree{
         const toExplorer = new Queue();
         let nodes = [];
         toExplorer.enqueue(root)
-
         while(true){
             let actualNode = toExplorer.dequeue()
-            if(actualNode === undefined){
+            if(toExplorer.size() === 0){
                 break;
             }
             if (actualNode.left !== undefined){
@@ -62,7 +91,7 @@ export class Tree{
             if (actualNode.right !== undefined){
                 toExplorer.enqueue(actualNode.right)
             }
-            nodes = nodes.concat(actualNode.data)
+            nodes = nodes.push(actualNode.data)
         }
         return nodes
     }
@@ -78,7 +107,16 @@ export class Tree{
         return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
-        const nodes = this.preOrder(root);
-        return nodes.length === 1 || Math.sqrt(nodes.length +1) === Math.floor(Math.sqrt(nodes.length +1))
+        const heightTree = this.hasHeight(this.root);
+        let deep = this.hasDeep(this.root, root);
+        const doesNotHaveChildren = root.left === undefined && root.right === undefined && deep === heightTree;
+        if (doesNotHaveChildren) {
+            return true;
+        }
+        const doesNotHaveBoth = root.left === undefined || root.right === undefined;
+        if (doesNotHaveBoth) {
+            return false;
+        }
+        return this.isPerfectTree(root.left) && this.isPerfectTree(root.right);
     }
 }
