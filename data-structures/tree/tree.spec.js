@@ -1,6 +1,4 @@
-import {Node} from "./tree.js"
-import {Tree} from "./tree.js"
-
+import {Node, Tree} from "./tree.js"
 
 
 describe("pre order", () =>{
@@ -386,21 +384,39 @@ describe("is perfect tree", () => {
 });
 describe("rotation", () => {
     it('should rotate to left side', () => {
-        const root = new Node(12);
-        root.left = new Node(34);
-        root.right = new Node(56);
-        root.right.left = new Node(67);
-        root.right.right = new Node(894);
-        const tree = new Tree()
-        expect(tree.rotateLeft(root)).toBe(root.right);
+        let X = new Node("X");
+        let Y = new Node("Y");
+        let A = new Node("A");
+        let B = new Node("B");
+        let C = new Node("C");
+        X.left = A;
+        X.right = Y;
+        Y.left = B;
+        Y.right = C;
+        const tree = new Tree();
+        const newRoot = tree.rotateLeft(X);
+        expect(newRoot).toBe(Y);
+        expect(newRoot.left).toBe(X);
+        expect(newRoot.right).toBe(C);
+        expect(newRoot.left.left).toBe(A);
+        expect(newRoot.left.right).toBe(B);
     });
     it('should rotate to right side', () => {
-        const root = new Node(12);
-        root.left = new Node(2763);
-        root.right = new Node(2763);
-        root.left.left = new Node(6253);
-        root.left.right = new Node(933948);
-        const tree = new Tree()
-        expect(tree.rotateRight(root)).toBe(root.left);
+        let X = new Node("X");
+        let Y = new Node("Y");
+        let A = new Node("A");
+        let B = new Node("B");
+        let C = new Node("C");
+        Y.left = X;
+        Y.right = C;
+        X.left = A;
+        X.right = B;
+        const tree = new Tree();
+        const newRoot = tree.rotateRight(Y);
+        expect(newRoot).toBe(X);
+        expect(newRoot.left).toBe(A);
+        expect(newRoot.right).toBe(Y);
+        expect(newRoot.right.left).toBe(B);
+        expect(newRoot.right.right).toBe(C);
     });
 });

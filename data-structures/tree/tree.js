@@ -121,14 +121,18 @@ export class Tree{
     }
     rotateLeft(root){
         let x = root;
+        let b = x.right.left;
         root = root.right;
         root.left = x;
+        root.left.right = b;
         return root;
     }
     rotateRight(root){
-        let y = root
-        root = root.left
-        root.right = y
+        let y = root;
+        let b = y.left.right;
+        root = root.left;
+        root.right = y;
+        root.right.left = b
         return root;
     }
 }
