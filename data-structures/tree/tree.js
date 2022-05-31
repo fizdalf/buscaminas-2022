@@ -9,40 +9,38 @@ export class Node{
 }
 
 export class Tree{
-    root;
-    constructor(root) {
-        this.root = root
-    }
     count = 0
-    hasDeep(root, node){
+    depth(root, node){
         let aux;
         if(root !== node){
             this.count++;
         }if (root.left !== undefined){
             aux = this.count
-            this.hasDeep(root.left, node);
+            this.depth(root.left, node);
         }
         if (root.right !== undefined){
             if (aux !== undefined){
                 this.count = aux;
-            }this.hasDeep(root.right, node);
-        }return this.count;
+            }this.depth(root.right, node);
+        }
+        return this.count;
     }
-    hasHeight(node){
+    height(node){
         if (node.left === undefined && node.right === undefined){
             return 0;
         }
         let heightLeft = -1;
         let heightRight = -1;
         if (node.left !== undefined){
-            heightLeft = this.hasHeight(node.left)
+            heightLeft = this.height(node.left)
         }
         if (node.right !== undefined){
-            heightRight = this.hasHeight(node.right)
+            heightRight = this.height(node.right)
         }
         if(heightLeft > heightRight){
             return heightLeft +1
-        }return heightRight +1
+        }
+        return heightRight +1
     }
     preOrder(root){
         let nodes = [root.data];
@@ -107,16 +105,30 @@ export class Tree{
         return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
-        const heightTree = this.hasHeight(this.root);
-        let deep = this.hasDeep(this.root, root);
-        const doesNotHaveChildren = root.left === undefined && root.right === undefined && deep === heightTree;
-        if (doesNotHaveChildren) {
+            return this.checkPerfect(root,this.depth(root),0);
+    }
+    checkPerfect(root, depth, level){
+        if(!root){
             return true;
         }
-        const doesNotHaveBoth = root.left === undefined || root.right === undefined;
-        if (doesNotHaveBoth) {
+        if(!root.left && !root.right){
+            return depth === level + 1;
+        }
+        if(!root.left || !root.right){
             return false;
         }
-        return this.isPerfectTree(root.left) && this.isPerfectTree(root.right);
+        return this.checkPerfect(root.left,depth, level +1) && this.checkPerfect(root.right, depth, level +1)
+    }
+    rotateLeft(root){
+        let x = root;
+        root = root.right;
+        root.left = x;
+        return root;
+    }
+    rotateRight(root){
+        let y = root
+        root = root.left
+        root.right = y
+        return root;
     }
 }
