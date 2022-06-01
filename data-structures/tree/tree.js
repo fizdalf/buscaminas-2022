@@ -3,20 +3,21 @@ export class Node{
     data;
     left;
     right;
+    node = this;
     constructor(data) {
         this.data = data
     }
-    height(node = this){
-        if (node.left === undefined && node.right === undefined){
+    height(){
+        if (this.left === undefined && this.right === undefined){
             return 0;
         }
         let heightLeft = -1;
         let heightRight = -1;
-        if (node.left !== undefined){
-            heightLeft = this.height(node.left)
+        if (this.left !== undefined){
+            heightLeft = this.left.height()
         }
-        if (node.right !== undefined){
-            heightRight = this.height(node.right)
+        if (this.right !== undefined){
+            heightRight = this.right.height()
         }
         if(heightLeft > heightRight){
             return heightLeft +1
@@ -24,18 +25,18 @@ export class Node{
         return heightRight +1
     }
     count = 0
-    depth(root, node = this){
+    depth(root){
         let aux;
-        if(root !== node){
+        if(root !== this){
             this.count++;
         }if (root.left !== undefined){
             aux = this.count
-            this.depth(root.left, node);
+            this.depth(root.left)
         }
         if (root.right !== undefined){
             if (aux !== undefined){
                 this.count = aux;
-            }this.depth(root.right, node);
+            }this.depth(root.right);
         }
         return this.count;
     }
