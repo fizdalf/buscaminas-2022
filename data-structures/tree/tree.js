@@ -81,16 +81,16 @@ export class Tree{
         toExplorer.enqueue(root)
         while(true){
             let actualNode = toExplorer.dequeue()
-            if(toExplorer.size() === 0){
-                break;
-            }
             if (actualNode.left !== undefined){
                 toExplorer.enqueue(actualNode.left)
             }
             if (actualNode.right !== undefined){
                 toExplorer.enqueue(actualNode.right)
             }
-            nodes = nodes.push(actualNode.data)
+            nodes = nodes.concat(actualNode.data)
+            if(toExplorer.size() === 0){
+                break;
+            }
         }
         return nodes
     }
@@ -106,14 +106,14 @@ export class Tree{
         return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
-            return this.#checkPerfect(root,this.depth(root),0);
+            return this.#checkPerfect(root,root.depth(root),0);
     }
     #checkPerfect(root, depth, level){
         if(!root){
             return true;
         }
         if(!root.left && !root.right){
-            return depth === level + 1;
+            return depth === level;
         }
         if(!root.left || !root.right){
             return false;
