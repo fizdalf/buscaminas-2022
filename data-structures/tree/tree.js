@@ -58,7 +58,7 @@ export class Tree{
         if(root.left !== undefined){
             nodes = nodes.concat(this.inOrder(root.left));
         }
-        nodes = nodes.concat(root.data);
+        nodes = nodes.concat(root.left.right);
         if(root.right !== undefined){
             nodes = nodes.concat(this.inOrder(root.right));
         }
@@ -106,7 +106,7 @@ export class Tree{
         return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
-            return this.checkPerfect(root,root.depth(),0);
+            return this.checkPerfect(root,this.depth(root),0);
     }
     checkPerfect(root, depth, level){
         if(!root){
@@ -137,26 +137,22 @@ export class Tree{
         return root;
     }
 
-    insertln(data){
+    insert(root, data){
         if (!this.root){
             this.root = new Node(data);
+        }
+        if(root.left !== undefined && data < root.data){
+            this.insert(root.left, data)
             return
         }
-        this.insert(this.root, data)
-    }
-    insert(root, data){
-        if(root.left !== undefined && data < root.data){
-            this.insertln(root.left, data);
-            return;
-        }
         if(root.right !== undefined && data > root.data){
-            this.insertln(root.right, data);
-            return;
+            this.insert(root.right, data)
+            return
         }
         if(root.left === undefined && root.data > data){
-            root.left = new Node(data);
-            return;
+            root.left = new Node(data)
+            return
         }
-        root.right = new Node(data);
+        root.right = new Node(data)
     }
 }
