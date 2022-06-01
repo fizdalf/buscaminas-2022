@@ -53,12 +53,12 @@ export class Tree{
         }
         return nodes;
     }
-    inOrder(root){
+    inOrder(root = this.root){
         let nodes = [];
         if(root.left !== undefined){
             nodes = nodes.concat(this.inOrder(root.left));
         }
-        nodes = nodes.concat(root.left.right);
+        nodes = nodes.concat(root.data);
         if(root.right !== undefined){
             nodes = nodes.concat(this.inOrder(root.right));
         }
@@ -106,9 +106,9 @@ export class Tree{
         return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
-            return this.checkPerfect(root,this.depth(root),0);
+            return this.#checkPerfect(root,this.depth(root),0);
     }
-    checkPerfect(root, depth, level){
+    #checkPerfect(root, depth, level){
         if(!root){
             return true;
         }
@@ -118,7 +118,7 @@ export class Tree{
         if(!root.left || !root.right){
             return false;
         }
-        return this.checkPerfect(root.left,depth, level +1) && this.checkPerfect(root.right, depth, level +1)
+        return this.#checkPerfect(root.left,depth, level +1) && this.#checkPerfect(root.right, depth, level +1)
     }
     rotateLeft(root){
         let x = root;
@@ -142,15 +142,15 @@ export class Tree{
             this.root = new Node(data);
             return;
         }
-        this.insertln(this.root, data)
+        this.#insertln(this.root, data)
     }
-    insertln(root, data){
+    #insertln(root, data){
         if(root.left !== undefined && data < root.data){
-            this.insertln(root.left, data)
+            this.#insertln(root.left, data)
             return
         }
         if(root.right !== undefined && data > root.data){
-            this.insertln(root.right, data)
+            this.#insertln(root.right, data)
             return
         }
         if(root.left === undefined && root.data > data){

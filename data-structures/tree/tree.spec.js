@@ -408,29 +408,29 @@ describe("rotation", () => {
 });
 describe("insert", () => {
     it('should insert a element less then right node', function () {
-        const root = new Node(10);
-        root.left = new Node(7);
-        root.right = new Node(11);
-        const tree = new Tree();
-        tree.insertln(root,1);
-        expect(tree.inOrder(root)).toStrictEqual([1,7,10,11])
+        const tree = new Tree()
+        tree.insert(10)
+        tree.insert(7)
+        tree.insert(11)
+        tree.insert(1)
+        expect(tree.inOrder()).toStrictEqual([1,7,10,11])
     });
-    it('should insert a element more high then left node', function () {
-        const root = new Node(20);
-        root.left = new Node(5);
-        root.right = new Node(21);
+    it('should insert a element more high then left node', function(){
         const tree = new Tree();
-        tree.insertln(root,7)
-        expect(tree.inOrder(root)).toStrictEqual([5,7,20,21])
+        tree.insert(5);
+        tree.insert(7);
+        tree.insert(20);
+        tree.insert(21);
+        expect(tree.inOrder()).toStrictEqual([5,7,20,21])
     });
     it('should insert two elements less than right node', function () {
-        const root = new Node(30)
-        root.left = new Node(23);
-        root.left.left = new Node(17);
-        root.right = new Node(45);
-        root.right.right = new Node(49);
         const tree = new Tree();
-        tree.insertln(root, 5);
-        expect(tree.inOrder(root)).toStrictEqual([17,18,23,30,45,49])
+        tree.insert(30);
+        tree.insert(23);
+        tree.insert(17);
+        tree.insert(45);
+        tree.insert(49);
+        tree.insert(5);
+        expect(tree.inOrder()).toStrictEqual([5,17,23,30,45,49])
     });
 });
