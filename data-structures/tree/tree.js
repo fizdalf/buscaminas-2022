@@ -58,7 +58,7 @@ export class Tree{
         if(root.left !== undefined){
             nodes = nodes.concat(this.inOrder(root.left));
         }
-        nodes = nodes.concat(root.left.right);
+        nodes = nodes.concat(root.data);
         if(root.right !== undefined){
             nodes = nodes.concat(this.inOrder(root.right));
         }
@@ -142,17 +142,17 @@ export class Tree{
             this.root = new Node(data);
         }
         if(root.left !== undefined && data < root.data){
-            this.insert(root.left, data)
-            return
+            this.insert(root.left, data);
+            return;
         }
         if(root.right !== undefined && data > root.data){
-            this.insert(root.right, data)
-            return
+            this.insert(root.right, data);
+            return;
         }
         if(root.left === undefined && root.data > data){
-            root.left = new Node(data)
-            return
+            root.left = new Node(data);
+            return;
         }
-        root.right = new Node(data)
+        root.right = new Node(data);
     }
 }
