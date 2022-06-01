@@ -44,52 +44,39 @@ export class Node{
 
 export class Tree{
     root;
-    preOrder(){
-        return this.#preOrder(this.root)
-    }
-    #preOrder(root){
+    preOrder(root){
         let nodes = [root.data];
         if(root.left !== undefined){
-            nodes = nodes.concat(this.#preOrder(root.left));
+            nodes = nodes.concat(this.preOrder(root.left));
         }
         if(root.right !== undefined){
-            nodes = nodes.concat(this.#preOrder(root.right));
+            nodes = nodes.concat(this.preOrder(root.right));
         }
         return nodes;
     }
-    inOrder(){
-        return this.#inOrder(this.root)
-    }
-    #inOrder(root){
+    inOrder(root = this.root){
         let nodes = [];
         if(root.left !== undefined){
-            nodes = nodes.concat(this.#inOrder(root.left));
+            nodes = nodes.concat(this.inOrder(root.left));
         }
         nodes = nodes.concat(root.data);
         if(root.right !== undefined){
-            nodes = nodes.concat(this.#inOrder(root.right));
+            nodes = nodes.concat(this.inOrder(root.right));
         }
         return nodes;
     }
-    postOrder(){
-        return this.#postOrder(this.root)
-    }
-    #postOrder(root){
+    postOrder(root){
         let nodes = [];
         if(root.left !== undefined){
-            nodes = nodes.concat(this.#postOrder(root.left));
+            nodes = nodes.concat(this.postOrder(root.left));
         }
         if(root.right !== undefined){
-            nodes = nodes.concat(this.#postOrder(root.right));
+            nodes = nodes.concat(this.postOrder(root.right));
         }
         nodes = nodes.concat(root.data);
         return nodes;
     }
-    breadthSearch(){
-        return this.#breadthSearch(this.root)
-    }
-
-    #breadthSearch(root){
+    breadthSearch(root){
         const toExplorer = new Queue();
         let nodes = [];
         toExplorer.enqueue(root)
@@ -108,11 +95,7 @@ export class Tree{
         }
         return nodes
     }
-
-    isFullTree(){
-        return this.#isFullTree(this.root)
-    }
-    #isFullTree(root){
+    isFullTree(root){
         const doesNotHaveChildren = root.left === undefined && root.right === undefined;
         if (doesNotHaveChildren) {
             return true;
@@ -121,7 +104,7 @@ export class Tree{
         if (doesNotHaveBoth) {
             return false;
         }
-        return this.#isFullTree(root.left) && this.#isFullTree(root.right);
+        return this.isFullTree(root.left) && this.isFullTree(root.right);
     }
     isPerfectTree(root) {
             return this.#checkPerfect(root,root.depth(root),0);
