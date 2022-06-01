@@ -3,167 +3,167 @@ import {Node, Tree} from "./tree.js"
 
 describe("pre order", () =>{
     it('should return data of the root', function () {
-        const root = new Node(1);
-        const tree = new Tree(root);
-        expect(tree.preOrder(root)).toStrictEqual([1]);
+        const tree = new Tree();
+        tree.insert(1)
+        expect(tree.preOrder()).toStrictEqual([1]);
     });
     it('should return the data of the two nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        const tree = new Tree(root);
-        expect(tree.preOrder(root)).toStrictEqual([1,2]);
+        const tree = new Tree();
+        tree.insert(1)
+        tree.insert(2)
+        expect(tree.preOrder()).toStrictEqual([1,2]);
     });
     it('should return the data of the three nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.right = new Node(3);
-        const tree = new Tree(root);
-        expect(tree.preOrder(root)).toStrictEqual([1,2,3]);
+        const tree = new Tree();
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        expect(tree.preOrder()).toStrictEqual([1,2,3]);
     });
     it('should return the data of the four nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.right = new Node(4);
         const tree = new Tree();
-        expect(tree.preOrder(root)).toStrictEqual([1,2,3,4]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        expect(tree.preOrder()).toStrictEqual([1,2,3,4]);
     });
     it('should return the data of the five nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right = new Node(5);
         const tree = new Tree();
-        expect(tree.preOrder(root)).toStrictEqual([1,2,3,4,5]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        tree.insert(5)
+        expect(tree.preOrder()).toStrictEqual([1,2,3,4,5]);
     });
     it('should return the data of the seven nodes', function () {
-        const root = new Node(4);
-        root.left = new Node(5);
-        root.left.left = new Node(6);
-        root.left.right = new Node(7);
-        root.right = new Node(8);
-        root.right.left = new Node(9);
-        root.right.right = new Node(10);
         const tree = new Tree();
-        expect(tree.preOrder(root)).toStrictEqual([4,5,6,7,8,9,10]);
+        tree.insert(4)
+        tree.insert(5)
+        tree.insert(6)
+        tree.insert(7)
+        tree.insert(8)
+        tree.insert(9)
+        tree.insert(10)
+        expect(tree.preOrder()).toStrictEqual([4,5,6,7,8,9,10]);
     });
 });
 
 describe("in order", () =>{
     it('should return data of the root', function () {
-        const root = new Node(1);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([1]);
+        tree.insert(1)
+        expect(tree.inOrder()).toStrictEqual([1]);
     });
     it('should return the data of the two nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([2,1]);
+        tree.insert(1)
+        tree.insert(2)
+        expect(tree.inOrder()).toStrictEqual([1,2]);
     });
     it('should return the data of the three nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.right = new Node(3);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([2,1,3]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        expect(tree.inOrder()).toStrictEqual([1,2,3]);
     });
     it('should return the data of the four nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.right = new Node(4);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([3,2,1,4]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        expect(tree.inOrder()).toStrictEqual([1,2,3,4]);
     });
     it('should return the data of the five nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right = new Node(5);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([3,2,4,1,5]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        tree.insert(5)
+        expect(tree.inOrder()).toStrictEqual([1,2,3,4,5]);
     });
     it('should return the data of the six nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right = new Node(5);
-        root.right.left = new Node(6);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([3,2,4,1,6,5]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        tree.insert(5)
+        tree.insert(6)
+        expect(tree.inOrder()).toStrictEqual([1,2,3,4,5,6]);
     });
     it('should return the data of the seven nodes', function () {
-        const root = new Node(4);
-        root.left = new Node(5);
-        root.left.left = new Node(6);
-        root.left.right = new Node(7);
-        root.right = new Node(8);
-        root.right.left = new Node(9);
-        root.right.right = new Node(10);
         const tree = new Tree();
-        expect(tree.inOrder(root)).toStrictEqual([6,5,7,4,9,8,10]);
+        tree.insert(4)
+        tree.insert(5)
+        tree.insert(6)
+        tree.insert(7)
+        tree.insert(8)
+        tree.insert(9)
+        tree.insert(10)
+        expect(tree.inOrder()).toStrictEqual([4,5,6,7,8,9,10]);
     });
 })
 describe("post order", () =>{
     it('should return data of the root', function () {
-        const root = new Node(1);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([1]);
+        tree.insert(1)
+        expect(tree.postOrder()).toStrictEqual([1]);
     });
     it('should return the data of the two nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([2,1]);
+        tree.insert(1)
+        tree.insert(2)
+        expect(tree.postOrder()).toStrictEqual([2,1]);
     });
     it('should return the data of the three nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.right = new Node(3);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([2,3,1]);
+        tree.insert(1)
+        tree.insert(3)
+        tree.insert(2)
+        expect(tree.postOrder()).toStrictEqual([2,3,1]);
     });
     it('should return the data of the four nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.right = new Node(4);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([3,2,4,1]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        expect(tree.postOrder()).toStrictEqual([4,3,2,1]);
     });
     it('should return the data of the five nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right = new Node(5);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([3,4,2,5,1]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        tree.insert(5)
+        expect(tree.postOrder()).toStrictEqual([5,4,3,2,1]);
     });
     it('should return the data of the six nodes', function () {
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right = new Node(5);
-        root.right.left = new Node(6);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([3,4,2,6,5,1]);
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(4)
+        tree.insert(5)
+        tree.insert(6)
+        expect(tree.postOrder()).toStrictEqual([6,5,4,3,2,1]);
     });
     it('should return the data of the seven nodes', function () {
-        const root = new Node(4);
-        root.left = new Node(5);
-        root.left.left = new Node(6);
-        root.left.right = new Node(7);
-        root.right = new Node(8);
-        root.right.left = new Node(9);
-        root.right.right = new Node(10);
         const tree = new Tree();
-        expect(tree.postOrder(root)).toStrictEqual([6,7,5,9,10,8,4]);
+        tree.insert(4)
+        tree.insert(5)
+        tree.insert(6)
+        tree.insert(7)
+        tree.insert(8)
+        tree.insert(9)
+        tree.insert(10)
+        expect(tree.postOrder()).toStrictEqual([10,9,8,7,6,5,4]);
     });
 });
 
@@ -265,65 +265,63 @@ describe("height", ()=> {
 
 describe("Breadth search",  () => {
     it('should travel the levels of tree', function (){
-        const root = new Node(1);
         const tree = new Tree();
-        expect(tree.breadthSearch(root)).toStrictEqual([1])
+        tree.insert(1)
+        expect(tree.breadthSearch()).toStrictEqual([1])
     });
     it('should travel the two levels of tree', function (){
-        const root = new Node(1);
-        root.left = new Node(2)
-        root.right = new Node(3)
         const tree = new Tree();
-        expect(tree.breadthSearch(root)).toStrictEqual([1,2,3])
+        tree.insert(2)
+        tree.insert(1)
+        tree.insert(3)
+        expect(tree.breadthSearch()).toStrictEqual([2,1,3])
     });
     it('should return the nodes data with breadth search', function (){
-        const root = new Node(1);
-        root.left = new Node(2);
-        root.right = new Node(3);
-        root.left.left = new Node(4);
-        root.left.right = new Node(5);
-        root.right.left = new Node(6);
-        root.right.right = new Node(7)
         const tree = new Tree();
-        expect(tree.breadthSearch(root)).toStrictEqual([1,2,3,4,5,6,7])
+        tree.insert(4)
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(5)
+        tree.insert(3)
+        tree.insert(6)
+        tree.insert(7)
+        expect(tree.breadthSearch()).toStrictEqual([4,1,5,2,6,3,7])
     });
 
 });
 
-
-
 describe("is full tree" , () =>{
    it("should return true when the tree only have root", () => {
-       const root = new Node(1);
        const tree = new Tree();
-       expect(tree.isFullTree(root)).toBe(true);
+       tree.insert(1243)
+       expect(tree.isFullTree()).toBe(true);
    });
     it("should return false when the tree have a node in the left", () => {
-        const root = new Node(1);
-        root.left = new Node(123)
         const tree = new Tree();
-        expect(tree.isFullTree(root)).toBe(false);
+        tree.insert(1243)
+        tree.insert(23)
+        expect(tree.isFullTree()).toBe(false);
     });
     it("should return false when the tree have a node in the right", () => {
-        const root = new Node(1);
-        root.right = new Node(123)
         const tree = new Tree();
-        expect(tree.isFullTree(root)).toBe(false);
+        tree.insert(1243)
+        tree.insert(12433)
+        expect(tree.isFullTree()).toBe(false);
     });
     it("should return true when the tree have two child nodes", () => {
-        const root = new Node(1);
-        root.left = new Node(123);
-        root.right = new Node(123);
         const tree = new Tree();
-        expect(tree.isFullTree(root)).toBe(true);
+        tree.insert(1243)
+        tree.insert(12)
+        tree.insert(12433)
+        expect(tree.isFullTree()).toBe(true);
     });
     it("should return false when the tree have two child nodes and one sub node", () => {
-        const root = new Node(1);
-        root.left = new Node(123);
-        root.right = new Node(847584);
-        root.left.left = new Node(93894);
         const tree = new Tree();
-        expect(tree.isFullTree(root)).toBe(false);
+        tree.insert(12)
+        tree.insert(11)
+        tree.insert(124)
+        tree.insert(10)
+        expect(tree.isFullTree()).toBe(false);
     });
 });
 describe("is perfect tree", () => {
