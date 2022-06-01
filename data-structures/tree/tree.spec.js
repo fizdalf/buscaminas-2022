@@ -167,39 +167,34 @@ describe("post order", () =>{
     });
 });
 
-describe("has deep", ()=> {
+describe("depth", ()=> {
     it("should return 0 when only have root", () => {
         const root = new Node(234);
-        const tree = new Tree();
-        expect(tree.depth(root, root)).toBe(0);
+        expect(root.depth(root, root)).toBe(0);
     });
     it("should return 1 when the root has one node at the left", () => {
         const root = new Node(234);
         root.left = new Node(1)
-        const tree = new Tree();
-        expect(tree.depth(root, root.left)).toBe(1);
+        expect(root.left.depth(root)).toBe(1);
     });
     it("should return 1 when the root has one node at the right", () => {
         const root = new Node(234);
         root.right = new Node(1);
-        const tree = new Tree();
-        expect(tree.depth(root, root.right)).toBe(1);
+        expect(root.right.depth(root)).toBe(1);
     });
     it("should return 2 when the node have this deep", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.left.left = new Node(3984);
-        const tree = new Tree();
-        expect(tree.depth(root, root.left.left)).toBe(2);
+        expect(root.left.left.depth(root)).toBe(2);
     });
     it("should return 2 when the node right have this deep", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(3984);
-        const tree = new Tree();
-        expect(tree.depth(root, root.right.left)).toBe(2);
+        expect(root.right.left.depth(root)).toBe(2);
     });
     it("should return 2 when the node right right have this deep", () => {
         const root = new Node(234);
@@ -207,8 +202,7 @@ describe("has deep", ()=> {
         root.right = new Node(1);
         root.right.left = new Node(498);
         root.right.right = new Node(3984);
-        const tree = new Tree();
-        expect(tree.depth(root, root.right.right)).toBe(2);
+        expect(root.right.right.depth(root)).toBe(2);
     });
     it("should return 3 when the node right have this deep", () => {
         const root = new Node(234);
@@ -217,44 +211,38 @@ describe("has deep", ()=> {
         root.right.left = new Node(498);
         root.right.left.right = new Node(38274);
         root.right.right = new Node(3984);
-        const tree = new Tree();
-        expect(tree.depth(root, root.right.left.right)).toBe(3);
+        expect(root.right.left.right.depth(root)).toBe(3);
     });
 });
 
-describe("has height", ()=> {
+describe("height", ()=> {
     it("should return 0 when only have root", () => {
         const root = new Node(234);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(0);
+        expect(root.height()).toBe(0);
     });
     it("should return 1 when the root has one node at the left", () => {
         const root = new Node(234);
         root.left = new Node(1)
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(1);
+        expect(root.height()).toBe(1);
     });
     it("should return 1 when the root has one node at the right", () => {
         const root = new Node(234);
         root.right = new Node(1);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(1);
+        expect(root.height()).toBe(1);
     });
     it("should return 2 when the node have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.left.left = new Node(3984);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(2);
+        expect(root.height()).toBe(2);
     });
     it("should return 2 when the node right have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(3984);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(2);
+        expect(root.height()).toBe(2);
     });
     it("should return 2 when the node right right have this height", () => {
         const root = new Node(234);
@@ -262,8 +250,7 @@ describe("has height", ()=> {
         root.right = new Node(1);
         root.right.left = new Node(498);
         root.right.right = new Node(3984);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(2);
+        expect(root.height()).toBe(2);
     });
     it("should return 3 when the node right have this height", () => {
         const root = new Node(234);
@@ -272,8 +259,7 @@ describe("has height", ()=> {
         root.right.left = new Node(498);
         root.right.left.right = new Node(38274);
         root.right.right = new Node(3984);
-        const tree = new Tree();
-        expect(tree.height(root)).toBe(3);
+        expect(root.height()).toBe(3);
     });
 });
 
@@ -418,5 +404,15 @@ describe("rotation", () => {
         expect(newRoot.right).toBe(Y);
         expect(newRoot.right.left).toBe(B);
         expect(newRoot.right.right).toBe(C);
+    });
+});
+describe("insert", () => {
+    it('should insert a element lees then right feet', function () {
+        const root = new Node(10);
+        root.left = new Node(7);
+        root.right = new Node(9);
+        const tree = new Tree();
+        tree.insert(root,1)
+        expect(root.left.left.data).toBe(1)
     });
 });

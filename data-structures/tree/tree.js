@@ -6,26 +6,7 @@ export class Node{
     constructor(data) {
         this.data = data
     }
-}
-
-export class Tree{
-    count = 0
-    depth(root, node){
-        let aux;
-        if(root !== node){
-            this.count++;
-        }if (root.left !== undefined){
-            aux = this.count
-            this.depth(root.left, node);
-        }
-        if (root.right !== undefined){
-            if (aux !== undefined){
-                this.count = aux;
-            }this.depth(root.right, node);
-        }
-        return this.count;
-    }
-    height(node){
+    height(node = this){
         if (node.left === undefined && node.right === undefined){
             return 0;
         }
@@ -42,6 +23,26 @@ export class Tree{
         }
         return heightRight +1
     }
+    count = 0
+    depth(root, node = this){
+        let aux;
+        if(root !== node){
+            this.count++;
+        }if (root.left !== undefined){
+            aux = this.count
+            this.depth(root.left, node);
+        }
+        if (root.right !== undefined){
+            if (aux !== undefined){
+                this.count = aux;
+            }this.depth(root.right, node);
+        }
+        return this.count;
+    }
+}
+
+export class Tree{
+    root;
     preOrder(root){
         let nodes = [root.data];
         if(root.left !== undefined){
@@ -134,5 +135,24 @@ export class Tree{
         root.right = y;
         root.right.left = b
         return root;
+    }
+
+    insert(root, data){
+        if (!this.root){
+            this.root = new Node(data);
+        }
+        if(root.left !== undefined && data < root.data){
+            this.insert(root.left, data)
+            return
+        }
+        if(root.right !== undefined && data > root.data){
+            this.insert(root.right, data)
+            return
+        }
+        if(root.left === undefined && root.data > data){
+            root.left = new Node(data)
+            return
+        }
+        root.right = new Node(data)
     }
 }
