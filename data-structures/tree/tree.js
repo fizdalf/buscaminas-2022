@@ -137,16 +137,20 @@ export class Tree{
         return root;
     }
 
-    insert(root, data){
+    insert(data){
         if (!this.root){
             this.root = new Node(data);
+            return;
         }
+        this.insertln(this.root, data)
+    }
+    insertln(root, data){
         if(root.left !== undefined && data < root.data){
-            this.insert(root.left, data)
+            this.insertln(root.left, data)
             return
         }
         if(root.right !== undefined && data > root.data){
-            this.insert(root.right, data)
+            this.insertln(root.right, data)
             return
         }
         if(root.left === undefined && root.data > data){
