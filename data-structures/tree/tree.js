@@ -158,9 +158,13 @@ export class Tree{
     insert(data){
         if (!this.root){
             this.root = new Node(data);
-            return;
+            return true;
+        }
+        if(this.exists(data)){
+            return false;
         }
         this.#insert(this.root, data)
+        return true;
     }
     #insert(root, data){
         if(root.left !== undefined && data < root.data){

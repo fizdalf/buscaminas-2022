@@ -3,9 +3,10 @@ const tree = new Tree();
 
 
 let count = 0
-while(count <= 10 **6){
-    tree.insert(Math.floor(Math.random() * 10 **10))
-    count++;
+while(count < 10 **6){
+    if (tree.insert(Math.floor(Math.random() * 10 **100))){
+        count++;
+    }
 }
 process.stdout.write("Bienvenido al programa de rendimiento de Tree\n");
 process.stdout.write("Introduce un numero: ");

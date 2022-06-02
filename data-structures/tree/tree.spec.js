@@ -431,6 +431,20 @@ describe("insert", () => {
         tree.insert(5);
         expect(tree.inOrder()).toStrictEqual([5,17,23,30,45,49])
     });
+    it('should return true when the first number is insert', function () {
+        const tree = new Tree();
+        expect(tree.insert(30)).toBe(true);
+    });
+    it('should return true when a number is insert', function () {
+        const tree = new Tree();
+        tree.insert(30)
+        expect(tree.insert(35)).toBe(true);
+    });
+    it('should return true when try insert a number who exists', function () {
+        const tree = new Tree();
+        tree.insert(30)
+        expect(tree.insert(30)).toBe(false);
+    });
 });
 describe("exists", () => {
     it("should return true when the data exists", () => {
