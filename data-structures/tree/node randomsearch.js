@@ -14,7 +14,7 @@ process.stdin.on("data", (data) => {
     if (tree.exists(parseInt(data, 10))){
         process.stdout.write("El numero existe!");
         process.exit();
-        console.timeEnd()
+        console.timeEnd("Ha tardado")
     }
     process.stdout.write("El numero no existe!\n");
     console.timeEnd("Ha tardado")
