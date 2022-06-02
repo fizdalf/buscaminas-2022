@@ -440,10 +440,30 @@ describe("insert", () => {
         tree.insert(30)
         expect(tree.insert(35)).toBe(true);
     });
-    it('should return true when try insert a number who exists', function () {
+    it('should return false when try insert a number who exists', function () {
         const tree = new Tree();
         tree.insert(30)
         expect(tree.insert(30)).toBe(false);
+    });
+    it('should return false when a element is repeated', function () {
+        const tree = new Tree();
+        tree.insert(91);
+        tree.insert(34);
+        tree.insert(82);
+        tree.insert(72);
+        tree.insert(902);
+        tree.insert(3);
+        expect(tree.insert(902)).toBe(false);
+    });
+    it('should return true when a element is not repeated', function () {
+        const tree = new Tree();
+        tree.insert(91);
+        tree.insert(34);
+        tree.insert(82);
+        tree.insert(72);
+        tree.insert(902);
+        tree.insert(3);
+        expect(tree.insert(90)).toBe(true);
     });
 });
 describe("exists", () => {

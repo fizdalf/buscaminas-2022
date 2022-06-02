@@ -3,7 +3,6 @@ export class Node{
     data;
     left;
     right;
-    node = this;
     constructor(data) {
         this.data = data
     }
@@ -160,26 +159,33 @@ export class Tree{
             this.root = new Node(data);
             return true;
         }
-        if(this.exists(data)){
-            return false;
-        }
-        this.#insert(this.root, data)
-        return true;
+        return this.#insert(this.root, data)
     }
     #insert(root, data){
+        if(root.data === data){
+            return false;
+        }
         if(root.left !== undefined && data < root.data){
-            this.#insert(root.left, data)
-            return
+            if (root.left.data === data){
+                return false;
+            }
+            return this.#insert(root.left, data)
+
         }
         if(root.right !== undefined && data > root.data){
-            this.#insert(root.right, data)
-            return
+            if (root.right.data === data){
+                return false;
+            }
+            return this.#insert(root.right, data)
         }
         if(root.left === undefined && root.data > data){
-            root.left = new Node(data)
-            return
+            root.left = new Node(data);
+            return true;
         }
-        root.right = new Node(data)
+        if(root.right === undefined && root.data < data){
+            root.right = new Node(data);
+            return true;
+        }
     }
     exists(data){
         return this.#exists(this.root, data)
