@@ -9,7 +9,8 @@ while(count < 10 **6){
     }
 }
 process.stdout.write("Bienvenido al programa de rendimiento de Tree\n");
-process.stdout.write("Introduce un numero: ");
+process.stdout.write("La altura del arboles: " + tree.root.height().toString() + " nodos\n");
+process.stdout.write("Introduce un numero para averiguar si existe: ");
 process.stdin.on("data", (data) => {
     console.time("Ha tardado")
     if (tree.exists(parseInt(data, 10))){
