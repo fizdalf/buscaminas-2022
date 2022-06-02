@@ -432,3 +432,35 @@ describe("insert", () => {
         expect(tree.inOrder()).toStrictEqual([5,17,23,30,45,49])
     });
 });
+describe("exists", () => {
+    it("should return true when the data exists", () => {
+        const tree = new Tree();
+        tree.insert(1);
+        expect(tree.exists(1)).toBe(true);
+    });
+    it("should return false when the data not exists", () => {
+        const tree = new Tree()
+        tree.insert(99)
+        expect(tree.exists(88)).toBe(false);
+    });
+    it("should return true when the second data exists", () => {
+        const tree = new Tree()
+        tree.insert(1)
+        tree.insert(2)
+        expect(tree.exists(2)).toBe(true);
+    });
+    it("should return false when the third data not exists", () => {
+        const tree = new Tree()
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(3)
+        expect(tree.exists(4)).toBe(false);
+    });
+    it("should return false when the fourth data not exists", () => {
+        const tree = new Tree()
+        tree.insert(5)
+        tree.insert(4)
+        tree.insert(3)
+        expect(tree.exists(2)).toBe(false);
+    });
+});

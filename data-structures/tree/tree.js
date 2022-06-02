@@ -160,4 +160,20 @@ export class Tree{
         }
         root.right = new Node(data)
     }
+    exists(data){
+        return this.#exists(this.root, data)
+    }
+
+    #exists(root, data) {
+        if(root.data === data){
+            return true;
+        }
+        if(root.left !== undefined && data < root.data){
+            return this.#exists(root.left, data);
+        }
+        if (root.right !== undefined && data > root.data){
+            return this.#exists(root.right, data);
+        }
+        return false;
+    }
 }
