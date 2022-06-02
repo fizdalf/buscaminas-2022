@@ -465,6 +465,12 @@ describe("insert", () => {
         tree.insert(3);
         expect(tree.insert(90)).toBe(true);
     });
+    it('should return false when a element at the left is repeat', function () {
+        const tree = new Tree();
+        tree.insert(91);
+        tree.insert(34);
+        expect(tree.insert(34)).toBe(false);
+    });
 });
 describe("exists", () => {
     it("should return true when the data exists", () => {

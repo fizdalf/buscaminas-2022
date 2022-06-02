@@ -85,10 +85,6 @@ export class Tree{
         return nodes;
     }
     breadthSearch(){
-        return this.#breadthSearch(this.root)
-    }
-
-    #breadthSearch(root){
         const toExplorer = new Queue();
         let nodes = [];
         toExplorer.enqueue(root)
