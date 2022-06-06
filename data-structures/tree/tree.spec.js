@@ -216,50 +216,50 @@ describe("depth", ()=> {
 });
 
 describe("height", ()=> {
-    it("should return 0 when only have root", () => {
+    it("should return 1 when only have root", () => {
         const root = new Node(234);
-        expect(root.height()).toBe(0);
+        expect(root.height()).toBe(1);
     });
-    it("should return 1 when the root has one node at the left", () => {
+    it("should return 2 when the root has one node at the left", () => {
         const root = new Node(234);
         root.left = new Node(1)
-        expect(root.height()).toBe(1);
+        expect(root.height()).toBe(2);
     });
-    it("should return 1 when the root has one node at the right", () => {
+    it("should return 2 when the root has one node at the right", () => {
         const root = new Node(234);
         root.right = new Node(1);
-        expect(root.height()).toBe(1);
+        expect(root.height()).toBe(2);
     });
-    it("should return 2 when the node have this height", () => {
+    it("should return 3 when the node have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.left.left = new Node(3984);
-        expect(root.height()).toBe(2);
+        expect(root.height()).toBe(3);
     });
-    it("should return 2 when the node right have this height", () => {
+    it("should return 3 when the node right have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(3984);
-        expect(root.height()).toBe(2);
+        expect(root.height()).toBe(3);
     });
-    it("should return 2 when the node right right have this height", () => {
+    it("should return 3 when the node right right have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(498);
         root.right.right = new Node(3984);
-        expect(root.height()).toBe(2);
+        expect(root.height()).toBe(3);
     });
-    it("should return 3 when the node right have this height", () => {
+    it("should return 4 when the node right have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(498);
         root.right.left.right = new Node(38274);
         root.right.right = new Node(3984);
-        expect(root.height()).toBe(3);
+        expect(root.height()).toBe(4);
     });
 });
 
@@ -327,14 +327,14 @@ describe("is full tree" , () =>{
 describe("is perfect tree", () => {
    it("this tree should be perfect", () => {
        const root = new Node(1);
-       const tree = new Tree(root);
-       expect(tree.isPerfectTree(root)).toBe(true);
+       const tree = new Tree();
+       expect(tree.isPerfectTree()).toBe(true);
    });
    it("this tree should be not perfect", () => {
        const root = new Node(1);
        root.left = new Node(2)
-       const tree = new Tree(root);
-       expect(tree.isPerfectTree(root)).toBe(false);
+       const tree = new Tree();
+       expect(tree.isPerfectTree()).toBe(false);
    });
     it("should return true when the tree have two child nodes", () => {
         const root = new Node(1);
@@ -342,8 +342,8 @@ describe("is perfect tree", () => {
         root.left.left = new Node(45)
         root.right = new Node(3);
         root.right.right = new Node(78)
-        const tree = new Tree(root);
-        expect(tree.isPerfectTree(root)).toBe(false);
+        const tree = new Tree();
+        expect(tree.isPerfectTree()).toBe(false);
     });
     it("this tree is full but is not perfect", () => {
         const root = new Node(1);
@@ -351,8 +351,8 @@ describe("is perfect tree", () => {
         root.left.right = new  Node(5);
         root.left.left = new Node(4);
         root.right = new Node(3);
-        const tree = new Tree(root);
-        expect(tree.isPerfectTree(root)).toBe(false);
+        const tree = new Tree();
+        expect(tree.isPerfectTree()).toBe(false);
     });
     it("this tree is full but is not perfect", () => {
         const root = new Node(1);
@@ -362,8 +362,8 @@ describe("is perfect tree", () => {
         root.right = new Node(3);
         root.right.right = new Node(6)
         root.right.left = new Node(7)
-        const tree = new Tree(root);
-        expect(tree.isPerfectTree(root)).toBe(true);
+        const tree = new Tree();
+        expect(tree.isPerfectTree()).toBe(true);
     });
 });
 describe("rotation", () => {
@@ -403,6 +403,27 @@ describe("rotation", () => {
         expect(newRoot.right.left).toBe(B);
         expect(newRoot.right.right).toBe(C);
     });
+    it("should rotate when not have all", () => {
+        let X = new Node("X");
+        let Y = new Node("Y");
+        let C = new Node("C");
+        X.right = Y;
+        Y.right = C;
+        const tree = new Tree();
+        const newRoot = tree.rotateLeft(X);
+        expect(newRoot).toBe(Y);
+        expect(newRoot.left).toBe(X);
+        expect(newRoot.right).toBe(C);
+    });
+    it.only("should rotate when only have two nodes", () => {
+        let X = new Node("X");
+        let Y = new Node("Y");
+        X.right = Y;
+        const tree = new Tree();
+        const newRoot = tree.rotateLeft(X);
+        expect(newRoot).toBe(Y);
+        expect(newRoot.left).toBe(X);
+    });
 });
 describe("insert", () => {
     it('should insert a element less then right node', function () {
@@ -431,15 +452,6 @@ describe("insert", () => {
         tree.insert(5);
         expect(tree.inOrder()).toStrictEqual([5,17,23,30,45,49])
     });
-    it('should return true when the first number is insert', function () {
-        const tree = new Tree();
-        expect(tree.insert(30)).toBe(true);
-    });
-    it('should return true when a number is insert', function () {
-        const tree = new Tree();
-        tree.insert(30)
-        expect(tree.insert(35)).toBe(true);
-    });
     it('should return false when try insert a number who exists', function () {
         const tree = new Tree();
         tree.insert(30)
@@ -454,16 +466,6 @@ describe("insert", () => {
         tree.insert(902);
         tree.insert(3);
         expect(tree.insert(902)).toBe(false);
-    });
-    it('should return true when a element is not repeated', function () {
-        const tree = new Tree();
-        tree.insert(91);
-        tree.insert(34);
-        tree.insert(82);
-        tree.insert(72);
-        tree.insert(902);
-        tree.insert(3);
-        expect(tree.insert(90)).toBe(true);
     });
     it('should return false when a element at the left is repeat', function () {
         const tree = new Tree();
@@ -502,5 +504,64 @@ describe("exists", () => {
         tree.insert(4)
         tree.insert(3)
         expect(tree.exists(2)).toBe(false);
+    });
+});
+describe("swing", () => {
+    it.only('should swing the height nodes', function () {
+        const tree = new Tree();
+        tree.insert(7);
+        tree.insert(18);
+        tree.insert(200);
+        expect(tree.preOrder()).toStrictEqual([18,7,200]);
+    });
+    it.only('should order the nodes with sons', function () {
+        const tree = new Tree();
+        tree.insert(10);
+        tree.insert(9);
+        tree.insert(8);
+        expect(tree.preOrder()).toStrictEqual([9,8,10])
+    });
+    it.only('should be swinged', function () {
+        const tree = new Tree();
+        tree.insert(20);
+        tree.insert(15);
+        tree.insert(30);
+        expect(tree.preOrder()).toStrictEqual([20,15,30])
+    });
+    it.only('should swing two times', function () {
+        const tree = new Tree();
+        tree.insert(20);
+        tree.insert(10);
+        tree.insert(15);
+        expect(tree.preOrder()).toStrictEqual([15,10,20])
+    });
+    it.only('should swing two times to the left', function () {
+        const tree = new Tree();
+        tree.insert(20);
+        tree.insert(25);
+        tree.insert(23);
+        expect(tree.preOrder()).toStrictEqual([23,20,25])
+    });
+    it.only('should swinging', function () {
+        const tree = new Tree();
+        tree.insert(20);
+        tree.insert(50);
+        tree.insert(10);
+        tree.insert(5);
+        tree.insert(15);
+        tree.insert(2);
+        expect(tree.preOrder()).toStrictEqual([10,5,2,20,15,50])
+    });
+    it.only('should return a balanced tree', function () {
+        const tree = new Tree();
+        tree.insert(50);
+        tree.insert(70);
+        tree.insert(100);
+        tree.insert(30);
+        tree.insert(15);
+        tree.insert(20);
+        tree.insert(21);
+        tree.insert(13);
+        expect(tree.preOrder()).toStrictEqual([30,20,15,13,21,70,50,100])
     });
 });

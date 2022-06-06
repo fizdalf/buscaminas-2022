@@ -8,7 +8,7 @@ export class Node{
     }
     height(){
         if (this.left === undefined && this.right === undefined){
-            return 0;
+            return 1;
         }
         let heightLeft = -1;
         let heightRight = -1;
@@ -87,7 +87,7 @@ export class Tree{
     breadthSearch(){
         const toExplorer = new Queue();
         let nodes = [];
-        toExplorer.enqueue(root)
+        toExplorer.enqueue(this.root)
         while(true){
             let actualNode = toExplorer.dequeue()
             if (actualNode.left !== undefined){
@@ -118,8 +118,8 @@ export class Tree{
         }
         return this.#isFullTree(root.left) && this.#isFullTree(root.right);
     }
-    isPerfectTree(root) {
-            return this.#checkPerfect(root,root.depth(root),0);
+    isPerfectTree() {
+            return this.#checkPerfect(this.root,this.root.depth(this.root),0);
     }
     #checkPerfect(root, depth, level){
         if(!root){
@@ -153,35 +153,28 @@ export class Tree{
     insert(data){
         if (!this.root){
             this.root = new Node(data);
-            return true;
         }
-        return this.#insert(this.root, data)
+        if(this.exists(data)){
+            throw new Error("Este dato ya existe");
+        }
+        this.root = this.#insert(this.root, data)
     }
     #insert(root, data){
-        if(root.data === data){
-            return false;
-        }
         if(root.left !== undefined && data < root.data){
-            if (root.left.data === data){
-                return false;
-            }
-            return this.#insert(root.left, data)
-
+            root.left = this.#insert(root.left, data);
+            root = this.swing(root);
         }
         if(root.right !== undefined && data > root.data){
-            if (root.right.data === data){
-                return false;
-            }
-            return this.#insert(root.right, data)
+            root.right = this.#insert(root.right, data);
+            root = this.swing(root);
         }
         if(root.left === undefined && root.data > data){
             root.left = new Node(data);
-            return true;
         }
         if(root.right === undefined && root.data < data){
             root.right = new Node(data);
-            return true;
         }
+        return root
     }
     exists(data){
         return this.#exists(this.root, data)
@@ -198,5 +191,21 @@ export class Tree{
             return this.#exists(root.right, data);
         }
         return false;
+    }
+    swing(node) {
+        let balanceFactor = (node.left ? node.left.height() : 0 ) - (node.right ? node.right.height() : 0)
+        if (balanceFactor > 1){
+            if((node.left.left ? node.left.left.height() : 0 ) - (node.left.right ? node.left.right.height() : 0) < 0){
+                node.left = this.rotateLeft(node.left);
+            }
+            node = this.rotateRight(node);
+        }
+        if (balanceFactor < -1){
+            if((node.right.left ? node.right.left.height() : 0 ) - (node.right.right ? node.right.right.height() : 0) > 0){
+                node.right = this.rotateRight(node.right);
+            }
+            node = this.rotateLeft(node);
+        }
+        return node;
     }
 }
