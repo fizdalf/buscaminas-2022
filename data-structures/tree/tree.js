@@ -149,32 +149,31 @@ export class Tree{
         root.right.left = b
         return root;
     }
-
     insert(data){
-        if (!this.root){
-            this.root = new Node(data);
+        try {
+            this.root = this.#insert(this.root, new Node(data));
+            return true;
+        } catch (error) {
+            return false;
         }
-        if(this.exists(data)){
+
+    }
+    #insert(root, node){
+        if (!root){
+            return node;
+        }
+        if (node.data === root.data){
             throw new Error("Este dato ya existe");
         }
-        this.root = this.#insert(this.root, data)
-    }
-    #insert(root, data){
-        if(root.left !== undefined && data < root.data){
-            root.left = this.#insert(root.left, data);
+        if(node.data < root.data){
+            root.left = this.#insert(root.left, node);
             root = this.swing(root);
         }
-        if(root.right !== undefined && data > root.data){
-            root.right = this.#insert(root.right, data);
+        if(node.data > root.data){
+            root.right = this.#insert(root.right, node);
             root = this.swing(root);
         }
-        if(root.left === undefined && root.data > data){
-            root.left = new Node(data);
-        }
-        if(root.right === undefined && root.data < data){
-            root.right = new Node(data);
-        }
-        return root
+        return root;
     }
     exists(data){
         return this.#exists(this.root, data)
