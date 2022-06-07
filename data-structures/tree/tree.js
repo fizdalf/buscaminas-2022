@@ -192,19 +192,21 @@ export class Tree{
         return false;
     }
     swing(node) {
-        let balanceFactor = (node.left ? node.left.height() : 0 ) - (node.right ? node.right.height() : 0)
-        if (balanceFactor > 1){
-            if((node.left.left ? node.left.left.height() : 0 ) - (node.left.right ? node.left.right.height() : 0) < 0){
+        if (this.balanceFactor(node) > 1){
+            if(this.balanceFactor(node.left) < 0){
                 node.left = this.rotateLeft(node.left);
             }
             node = this.rotateRight(node);
         }
-        if (balanceFactor < -1){
-            if((node.right.left ? node.right.left.height() : 0 ) - (node.right.right ? node.right.right.height() : 0) > 0){
+        if (this.balanceFactor(node)  < -1){
+            if(this.balanceFactor(node.right) > 0){
                 node.right = this.rotateRight(node.right);
             }
             node = this.rotateLeft(node);
         }
         return node;
+    }
+    balanceFactor(node){
+        return (node.left ? node.left.height() : 0 ) - (node.right ? node.right.height() : 0);
     }
 }
