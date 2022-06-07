@@ -218,31 +218,31 @@ describe("depth", ()=> {
 describe("height", ()=> {
     it("should return 1 when only have root", () => {
         const root = new Node(234);
-        expect(root.height()).toBe(1);
+        expect(root.calculateHeight()).toBe(1);
     });
     it("should return 2 when the root has one node at the left", () => {
         const root = new Node(234);
         root.left = new Node(1)
-        expect(root.height()).toBe(2);
+        expect(root.calculateHeight()).toBe(2);
     });
     it("should return 2 when the root has one node at the right", () => {
         const root = new Node(234);
         root.right = new Node(1);
-        expect(root.height()).toBe(2);
+        expect(root.calculateHeight()).toBe(2);
     });
     it("should return 3 when the node have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.left.left = new Node(3984);
-        expect(root.height()).toBe(3);
+        expect(root.calculateHeight()).toBe(3);
     });
     it("should return 3 when the node right have this height", () => {
         const root = new Node(234);
         root.left = new Node(183);
         root.right = new Node(1);
         root.right.left = new Node(3984);
-        expect(root.height()).toBe(3);
+        expect(root.calculateHeight()).toBe(3);
     });
     it("should return 3 when the node right right have this height", () => {
         const root = new Node(234);
@@ -250,7 +250,7 @@ describe("height", ()=> {
         root.right = new Node(1);
         root.right.left = new Node(498);
         root.right.right = new Node(3984);
-        expect(root.height()).toBe(3);
+        expect(root.calculateHeight()).toBe(3);
     });
     it("should return 4 when the node right have this height", () => {
         const root = new Node(234);
@@ -259,7 +259,7 @@ describe("height", ()=> {
         root.right.left = new Node(498);
         root.right.left.right = new Node(38274);
         root.right.right = new Node(3984);
-        expect(root.height()).toBe(4);
+        expect(root.calculateHeight()).toBe(4);
     });
 });
 
@@ -507,42 +507,42 @@ describe("exists", () => {
     });
 });
 describe("swing", () => {
-    it.only('should swing the height nodes', function () {
+    it('should swing the height nodes', function () {
         const tree = new Tree();
         tree.insert(7);
         tree.insert(18);
         tree.insert(200);
         expect(tree.preOrder()).toStrictEqual([18,7,200]);
     });
-    it.only('should order the nodes with sons', function () {
+    it('should order the nodes with sons', function () {
         const tree = new Tree();
         tree.insert(10);
         tree.insert(9);
         tree.insert(8);
         expect(tree.preOrder()).toStrictEqual([9,8,10])
     });
-    it.only('should be swinged', function () {
+    it('should be swinged', function () {
         const tree = new Tree();
         tree.insert(20);
         tree.insert(15);
         tree.insert(30);
         expect(tree.preOrder()).toStrictEqual([20,15,30])
     });
-    it.only('should swing two times', function () {
+    it('should swing two times', function () {
         const tree = new Tree();
         tree.insert(20);
         tree.insert(10);
         tree.insert(15);
         expect(tree.preOrder()).toStrictEqual([15,10,20])
     });
-    it.only('should swing two times to the left', function () {
+    it('should swing two times to the left', function () {
         const tree = new Tree();
         tree.insert(20);
         tree.insert(25);
         tree.insert(23);
         expect(tree.preOrder()).toStrictEqual([23,20,25])
     });
-    it.only('should swinging', function () {
+    it('should swinging', function () {
         const tree = new Tree();
         tree.insert(20);
         tree.insert(50);
@@ -562,6 +562,6 @@ describe("swing", () => {
         tree.insert(20);
         tree.insert(21);
         tree.insert(13);
-        expect(tree.preOrder()).toStrictEqual([30,20,15,13,21,70,50,100])
+        expect(tree.preOrder()).toStrictEqual([30,20,15,13,21,70,50,100]);
     });
 });

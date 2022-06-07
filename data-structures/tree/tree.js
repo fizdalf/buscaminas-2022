@@ -3,20 +3,21 @@ export class Node{
     data;
     left;
     right;
+    height = 1;
     constructor(data) {
         this.data = data
     }
-    height(){
+    calculateHeight(){
         if (this.left === undefined && this.right === undefined){
             return 1;
         }
         let heightLeft = -1;
         let heightRight = -1;
         if (this.left !== undefined){
-            heightLeft = this.left.height()
+            heightLeft = this.left.calculateHeight()
         }
         if (this.right !== undefined){
-            heightRight = this.right.height()
+            heightRight = this.right.calculateHeight()
         }
         if(heightLeft > heightRight){
             return heightLeft +1
@@ -167,16 +168,16 @@ export class Tree{
         }
         if(node.data < root.data){
             root.left = this.#insert(root.left, node);
-            root = this.swing(root);
+            root = this.swing(root, node.data);
         }
         if(node.data > root.data){
             root.right = this.#insert(root.right, node);
-            root = this.swing(root);
+            root = this.swing(root, node.data);
         }
         return root;
     }
     exists(data){
-        return this.#exists(this.root, data)
+        return this.#exists(this.root, data);
     }
 
     #exists(root, data) {
@@ -191,22 +192,21 @@ export class Tree{
         }
         return false;
     }
-    swing(node) {
-        if (this.balanceFactor(node) > 1){
-            if(this.balanceFactor(node.left) < 0){
+    swing(node, lastData) {
+        node.height = 1 +  Math.max(node.left?.height || 0, node.right?.height || 0)
+        let balanceFactor = (node.left ? node.left.height : 0 ) - (node.right ? node.right.height : 0)
+        if (balanceFactor > 1){
+            if(node.left.data < lastData){
                 node.left = this.rotateLeft(node.left);
             }
             node = this.rotateRight(node);
         }
-        if (this.balanceFactor(node)  < -1){
-            if(this.balanceFactor(node.right) > 0){
+        if (balanceFactor  < -1){
+            if(node.right.data > lastData){
                 node.right = this.rotateRight(node.right);
             }
             node = this.rotateLeft(node);
         }
         return node;
-    }
-    balanceFactor(node){
-        return (node.left ? node.left.height() : 0 ) - (node.right ? node.right.height() : 0);
     }
 }
