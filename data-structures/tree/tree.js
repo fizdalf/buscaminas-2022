@@ -140,6 +140,8 @@ export class Tree{
         root = root.right;
         root.left = x;
         root.left.right = b;
+        root.left.height = this.#calculateNodeHeight(root.left);
+        root.height = this.#calculateNodeHeight(root);
         return root;
     }
     rotateRight(root){
@@ -147,7 +149,9 @@ export class Tree{
         let b = y.left.right;
         root = root.left;
         root.right = y;
-        root.right.left = b
+        root.right.left = b;
+        root.right.height = this.#calculateNodeHeight(root.left);
+        root.height = this.#calculateNodeHeight(root);
         return root;
     }
     insert(data){
@@ -194,7 +198,7 @@ export class Tree{
     }
     swing(node, lastData) {
         node.height = 1 +  Math.max(node.left?.height || 0, node.right?.height || 0)
-        let balanceFactor = (node.left ? node.left.height : 0 ) - (node.right ? node.right.height : 0)
+        let balanceFactor = this.#balanceFactor(node)
         if (balanceFactor > 1){
             if(node.left.data < lastData){
                 node.left = this.rotateLeft(node.left);
@@ -208,5 +212,24 @@ export class Tree{
             node = this.rotateLeft(node);
         }
         return node;
+    }
+
+    #getNodeHeight(node){
+        if(!node){
+            return 0;
+        }
+        return node.height;
+    }
+    #calculateNodeHeight(node){
+        if(!node){
+            return 1;
+        }
+        return 1 +Math.max(this.#getNodeHeight(node.left), this.#getNodeHeight(node.right));
+    }
+    #balanceFactor(node){
+        if (!node){
+            return 0;
+        }
+        return this.#getNodeHeight(node.left) - this.#getNodeHeight(node.right);
     }
 }
