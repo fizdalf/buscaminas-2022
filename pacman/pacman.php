@@ -3,16 +3,15 @@ require "livePacman.php"
 require "food.php"
 class pacman implements character, livePacman{
     canKill = false;
-    point = 0;
     public function listenKeyboard(){
         $this.move(key.press);
     }
-    public function dead{
-        if($this.distance(ghost) === 0){
+    public function dead(ghost){
+        if($this.distance(ghost) === 0 && !this.canKill){
             return "game over";
         }
     }
-    public function kill(){
+    public function kill(ghost){
         if(this.canKill && $this.distance(ghost) === 0){
             this.point = this.point +100;
          }
