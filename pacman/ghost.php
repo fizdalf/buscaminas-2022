@@ -9,8 +9,7 @@ class ghost extends character{
     public function movement(){
         $this.move(array_rand(["UP", "DOWN", "RIGHT", "LEFT"], 1));
     }
-
-    public function isDead(pacman){
+    public function dead(pacman){
         if(this.distance(pacman) === 0 && pacman.canKill){
             this.isDead = true;
             this.revive();

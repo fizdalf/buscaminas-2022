@@ -15,15 +15,15 @@ class character {
          }
     }
     public function up(){
-        return "pacman is move to up";
+        return "is move to up";
     }
     public function down(){
-        return "pacman is move to down";
+        return "is move to down";
     }
     public function right(){
-        return "pacman is move to right";
+        return "is move to right";
     }
     public function left(){
-       return "pacman is move to left";
+       return "is move to left";
     }
 }

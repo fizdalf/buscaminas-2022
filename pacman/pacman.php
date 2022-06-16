@@ -1,21 +1,26 @@
 require "character.php"
-require "livePacman.php"
+require "killerOrKillablePacman.php"
 require "food.php"
-class pacman implements character, livePacman{
+class pacman implements character, killable, killer{
     canKill = false;
     public function listenKeyboard(){
         $this.move(key.press);
     }
     public function dead(ghost){
-        if($this.distance(ghost) === 0 && !this.canKill){
-            return "game over";
-        }
+        return "game over";
     }
     public function kill(ghost){
-        if(this.canKill && $this.distance(ghost) === 0){
-            this.point = this.point +100;
-         }
+        this.point = this.point +100;
     }
+    public function killerOrVictim(ghost){
+        if(this.canKill){
+            this.kill(ghost);
+            ghost.dead();
+            return;
+        }
+        this.dead(ghost);
+    }
+
     public function distance(object){
         return distanceObject;
     }

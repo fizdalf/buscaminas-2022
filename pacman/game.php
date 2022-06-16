@@ -20,23 +20,17 @@ class game{
     public function initGame{
         this.createFood;
         while(true){
-            pacman.movement();
+            pacman.listenKeyboard();
             ghostPink.movement();
             ghostRed.movement();
             ghostGreen.movement();
             ghostBlue.movement();
-            pacman.dead(ghostRed);
-            pacman.kill(ghostRed);
-            pacman.dead(ghostBlue);
-            pacman.kill(ghostBlue);
-            pacman.dead(ghostGreen);
-            pacman.kill(ghostGreen);
-            pacman.dead(ghostPink);
-            pacman.kill(ghostPink);
-            ghostPink.isDead(pacman);
-            ghostRed.isDead(pacman);
-            ghostGreen.isDead(pacman);
-            ghostBlue.isDead(pacman);
+            if(this.distance(ghost) === 0){
+                pacman.killerOrVictim(ghostRed);
+                pacman.killerOrVictim(ghostBlue);
+                pacman.killerOrVictim(ghostGreen);
+                pacman.killerOrVictim(ghostPink);
+            }
             pacman.eat(food);
             this.point = this.point + pacman.point;
         }
